@@ -7,95 +7,128 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <title>Booktest</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            text-align: center;
-            padding: 50px;
-        }
-        h1 {
-            color: #333;
-        }
-        p {
-            color: #555;
-        }
-        #bookButtons {
-            margin-top: 20px;
-        }
-        #bookButtons button {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            margin: 5px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        #bookButtons button:hover {
-            background-color: #45a049;
-        }
-        #inputDialog {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    text-align: center;
+    padding: 20px;
+    margin: 0;
+}
 
-	#inputDialog .backButton {
-    	    position: absolute;
-    	    bottom: 10px; /* 距離底部的距離 */
-   	    right: 10px; /* 距離右側的距離 */
-	}
+h1 {
+    color: #333;
+    font-size: 24px;
+}
 
-        #inputDialog h2 {
-            margin-top: 0;
-        }
-        #inputDialog #pageNumber {
-            width: calc(100% - 20px);
-            padding: 10px;
-            margin: 10px 0;
-            box-sizing: border-box;
-            text-align: center;
-        }
-	#inputDialog .numberButton {
-   	   width: 40px; /* 原來是60px */
-   	   height: 40px; /* 原來是60px */
-  	  font-size: 16px; /* 原來是24px */
-  	  margin: 5px;
-  	  background-color: #4CAF50;
-   	  color: white;
-  	  border: none;
-  	  border-radius: 5px;
-  	  cursor: pointer;
-    	  transition: background-color 0.3s;
-	}	
+p {
+    color: #555;
+    font-size: 18px;
+}
 
-        #inputDialog .numberButton:hover {
-            background-color: #45a049;
-        }
-        #inputDialog .clearButton, #inputDialog .submitButton {
-            background-color: #f44336;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        #inputDialog .clearButton:hover, #inputDialog .submitButton:hover {
-            background-color: #d32f2f;
-        }
-        #result {
-            margin-top: 10px;
-            color: #333;
-        }
+#bookButtons {
+    margin-top: 20px;
+}
+
+#bookButtons button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 16px;
+    width: calc(100% - 40px);
+    max-width: 300px;
+}
+
+#bookButtons button:hover {
+    background-color: #45a049;
+}
+
+#inputDialog {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 400px;
+    box-sizing: border-box;
+}
+
+#inputDialog .backButton {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-color: #f44336;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#inputDialog .backButton:hover {
+    background-color: #d32f2f;
+}
+
+#inputDialog h2 {
+    margin-top: 0;
+    font-size: 20px;
+}
+
+#inputDialog #pageNumber {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    box-sizing: border-box;
+    text-align: center;
+    font-size: 18px;
+}
+
+#inputDialog .numberButton {
+    width: 50px;
+    height: 50px;
+    font-size: 18px;
+    margin: 5px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#inputDialog .numberButton:hover {
+    background-color: #45a049;
+}
+
+#inputDialog .clearButton, #inputDialog .submitButton {
+    background-color: #f44336;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#inputDialog .clearButton:hover, #inputDialog .submitButton:hover {
+    background-color: #d32f2f;
+}
+
+#result {
+    margin-top: 10px;
+    color: #333;
+    font-size: 18px;
+}
     </style>
     <script>
 	// 阻止 F12 開發者工具
