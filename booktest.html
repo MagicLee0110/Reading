@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <title>魔術書頁數</title>
+    <title>Booktest</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -64,18 +64,19 @@
             box-sizing: border-box;
             text-align: center;
         }
-        #inputDialog .numberButton {
-            width: 60px;
-            height: 60px;
-            font-size: 24px;
-            margin: 5px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
+	#inputDialog .numberButton {
+   	   width: 40px; /* 原來是60px */
+   	   height: 40px; /* 原來是60px */
+  	  font-size: 16px; /* 原來是24px */
+  	  margin: 5px;
+  	  background-color: #4CAF50;
+   	  color: white;
+  	  border: none;
+  	  border-radius: 5px;
+  	  cursor: pointer;
+    	  transition: background-color 0.3s;
+	}	
+
         #inputDialog .numberButton:hover {
             background-color: #45a049;
         }
@@ -129,7 +130,8 @@
 
 
         const books = {
-            "五點": ["大多數", "用 或 我", "(空白頁)", "第一點", "(空白頁)", "第一點", "表達", "不要", "無論何時", "在", "眼神", "換句話說", "動作", "(4)兩次", ""],
+            "五點": ["大多數", "用", "我", "(空白頁)", "第一點", "(空白頁)", "第一點 或 表演 或 當", "表達", "不要", "無論何時", "在", "眼神 或 當", "換句話說 或 在", "動作 或 右手", "(4)兩次 或 視線", "方法 或 1.向", "第一次 或 視線", "第二次 或 右手" , "魔術師","緞帶", "3.如圖", "6.裝作", "空白頁", "空白頁", "第二點 聲音", "空白頁", "第二點 聲音 或 聽覺 或 要讓", "想像", "變化 或 我們", "改變 或在 或 音量", "厭惡 或 選", "用心靈魔術來練習 或 心靈魔術", "1+0+6單詞", "(拿著一個張建築的照片 有很多人)", "方法 或 1.拿出", "6.用", "(魔術師拿牌的圖) 或 顯示", "9.將", "12.讓", "14.讓", "第三點", "(空白頁)", "第三點 或 手 或 你", "h不要", "在一個 或 用手指", "模仿", "使 或 停", "清晰 或 無論" , "要", "例子 或 紙牌", "小拇指", "向", "圖 或 右手", "(空白頁)", "第四點", "(空白頁)", "第四點 或 記住", "e拿", "第五點", "(空白頁)", "第五點 或 肢體 或 很多", "姿勢 或 一個", "圖 或 在", "在", "硬幣 或 效果", "仔細", "嗎", "將", "圖 或 當", "硬幣 或 圖", "圖 或 左", "圖 或 要", "右手", "右手", "圖98", "身體", "根據", "高潮 或 放鬆", "(空白頁)", "總結 或 我", "(手的愛心圖)", "參考 或 關於", "shownmanship 或 Fitzkee", "La", "Pensamiento", "shownmanship", "Theatrical", "與魔術", "保持", "(空白頁)", "後記 或 2012", "2012", "當", "四隻手戴帽子的人(圖)"],
+
             "魔術名人錄": ["序", "1997詹森", "如果", "羅飛雄", "B書", "的", "內容"],
             "Feedom of Expression": ["在", "一", "這", "非 或 如", "觀 或 你", "自", "我 或 在", "與", "與", "與", "與", "與", "與", "與", "與", "與", "與", "與", "與", "與", "與", "與", "與", "與", "與", "與", "與", "與", "與", "與", "與", "與", "與", "與", "與", "與", "與", "與", "與", "與", "與", "與", "與", "與", "與"],
             "D書": ["更多", "的", "資料", "在", "這", "裡面", "假", "數據"],
@@ -196,27 +198,43 @@
     <p>請選擇一本書並輸入頁數，將顯示該頁的第一個字</p>
     <div id="bookButtons">
         <button onclick="selectBook('五點')">五點</button>
+	</br>
         <button onclick="selectBook('魔術名人錄')">魔術名人錄</button>
+	</br>
         <button onclick="selectBook('Feedom of Expression')">Feedom of Expression</button>
+	</br>
         <button onclick="selectBook('D書')">D書</button>
+	</br>
         <button onclick="selectBook('E書')">E書</button>
 	</br>
         <button onclick="selectBook('69 BOOK TESTS')">69 BOOK TESTS</button>
+	</br>
         <button onclick="selectBook('G書')">G書</button>
+	</br>
         <button onclick="selectBook('H書')">H書</button>
+	</br>
         <button onclick="selectBook('I書')">I書</button>
+	</br>
         <button onclick="selectBook('J書')">J書</button>
 	</br>
         <button onclick="selectBook('K書')">K書</button>
+	</br>
         <button onclick="selectBook('L書')">L書</button>
+	</br>
         <button onclick="selectBook('M書')">M書</button>
+	</br>
         <button onclick="selectBook('N書')">N書</button>
+	</br>
         <button onclick="selectBook('O書')">O書</button>
 	</br>
         <button onclick="selectBook('P書')">P書</button>
+	</br>
         <button onclick="selectBook('Q書')">Q書</button>
+	</br>
         <button onclick="selectBook('R書')">R書</button>
+	</br>
         <button onclick="selectBook('S書')">S書</button>
+	</br>
         <button onclick="selectBook('T書')">T書</button>
 	</br>
         <button onclick="selectBook('U書')">U書</button>
