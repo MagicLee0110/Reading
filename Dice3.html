@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>極限骰</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        font-size: 20px;
+    }
+    .container {
+        width: 90%;
+        max-width: 600px;
+        margin: auto;
+        padding: 30px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+        margin-top: 0;
+        font-size: 28px;
+        text-align: center;
+    }
+    label {
+        display: block;
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+    .input-container {
+        margin-bottom: 25px;
+    }
+    input {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 10px;
+        border: 2px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+        font-size: 20px;
+    }
+    button.calculate {
+        width: 100%;
+        padding: 15px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 22px;
+        margin-top: 20px;
+    }
+    button.calculate:hover {
+        background-color: #45a049;
+    }
+    p {
+        margin-top: 20px;
+        font-size: 22px;
+        text-align: center;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <h2>極限骰 by 李沅泰</h2>
+    <p>(版權所有，盜版必究)</p>
+    <div class="input-container">
+        <label for="inputX">請輸入 (左)平方 + (右)平方:</label>
+        <input type="number" id="inputX">
+    </div>
+    <div class="input-container">
+        <label for="inputY">請輸入 (左)平方 - (右)b平方:</label>
+        <input type="number" id="inputY">
+    </div>
+    <button class="calculate" onclick="calculate()">擲骰子</button>
+    <p id="sumResult"></p>
+    <p id="multiplyResult"></p>
+    <p id="result"></p>
+    <p id="specialResult"></p>
+</div>
+
+<script>
+function calculate() {
+    var x = parseInt(document.getElementById("inputX").value);
+    var y = parseInt(document.getElementById("inputY").value);
+
+    var a, b;
+    var found = false;
+
+    for (a = 1; a <= 6; a++) {
+        for (b = 1; b <= 6; b++) {
+            if (a * a + b * b === x && a * a - b * b === y) {
+                found = true;
+                break;
+            }
+        }
+        if (found) {
+            break;
+        }
+    }
+
+    if (!found) {
+        document.getElementById("sumResult").innerHTML = "無法找到符合條件的 a 和 b";
+        document.getElementById("multiplyResult").innerHTML = "";
+        document.getElementById("result").innerHTML = "";
+        document.getElementById("specialResult").innerHTML = "";
+        return;
+    }
+
+    var sum = Math.abs(x)+Math.abs(y);
+    var product = sum * 21;
+
+    document.getElementById("sumResult").innerHTML = "因為 " + Math.abs(x) + " + " + Math.abs(y) + " 等於 = " + sum;
+    document.getElementById("multiplyResult").innerHTML = sum + " * 21 = " + product;
+
+    var result = 0;
+    if ((a == 2 && b == 3) || (a == 3 && b == 5) || (a == 5 && b == 4) || (a == 4 && b == 2)) {
+        result = 1;
+    } else if ((a == 3 && b == 1) || (a == 1 && b == 4) || (a == 4 && b == 6) || (a == 6 && b == 3)) {
+        result = 2;
+    } else if ((a == 1 && b == 2) || (a == 2 && b == 6) || (a == 6 && b == 5) || (a == 5 && b == 1)) {
+        result = 3;
+    } else if ((a == 1 && b == 5) || (a == 5 && b == 6) || (a == 6 && b == 2) || (a == 2 && b == 1)) {
+        result = 4;
+    } else if ((a == 1 && b == 3) || (a == 3 && b == 6) || (a == 6 && b == 4) || (a == 4 && b == 1)) {
+        result = 5;
+    } else if ((a == 4 && b == 5) || (a == 5 && b == 3) || (a == 3 && b == 2) || (a == 2 && b == 4)) {
+        result = 6;
+    }
+
+    document.getElementById("result").innerHTML = "故擲骰正面朝上為：" + result + "點";
+
+    var specialResult = "";
+    if ((a == 3 && b == 2) || (a == 2 && b == 4) || (a == 4 && b == 5) || (a == 5 && b == 3)) {
+        specialResult = "特殊骰子為: 1點";
+    } else if ((a == 1 && b == 3) || (a == 3 && b == 6) || (a == 6 && b == 4) || (a == 4 && b == 1)) {
+        specialResult = "特殊骰子為: 2點";
+    } else if ((a == 1 && b == 5) || (a == 5 && b == 6) || (a == 6 && b == 2) || (a == 2 && b == 1)) {
+        specialResult = "特殊骰子為: 3點";
+    } else if ((a == 1 && b == 2) || (a == 2 && b == 6) || (a == 6 && b == 5) || (a == 5 && b == 1)) {
+        specialResult = "特殊骰子為: 4點";
+    } else if ((a == 1 && b == 4) || (a == 4 && b == 6) || (a == 6 && b == 3) || (a == 3 && b == 1)) {
+        specialResult = "特殊骰子為: 5點";
+    } else if ((a == 2 && b == 3) || (a == 3 && b == 5) || (a == 5 && b == 4) || (a == 4 && b == 2)) {
+        specialResult = "特殊骰子為: 6點";
+    }
+
+    document.getElementById("specialResult").innerHTML = specialResult;
+}
+</script>
+</body>
+</html>
