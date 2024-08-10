@@ -7,17 +7,20 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <title>星座研究</title>
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f7f7f7;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            color: #333;
-        }
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f7f7f7;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    color: #333;
+    text-align: center;
+}
 
         h1 {
             font-size: 2em;
@@ -32,33 +35,31 @@
             margin-bottom: 15px;
         }
 
-        .page {
-            display: none;
-            background-color: #fff;
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            width: 80%;
-            max-width: 600px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
+.page {
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    width: 90%; /* 調整為百分比 */
+    max-width: 600px; /* 最大寬度 */
+    box-sizing: border-box;
+}
 
         .active {
             display: block;
         }
 
-        button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            margin-top: 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1em;
-        }
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    margin: 10px auto 0; /* 調整按鈕的邊距 */
+    display: block;
+}
 
         button:hover {
             background-color: #45a049;
@@ -263,7 +264,7 @@
                     console.log('Page ' + pageNumber + ' exceeded 7 seconds');
                     // 增加「。」字元到象限的元素上
                     document.getElementById('quadrant' + pageNumber).classList.add('quadrant-updated');
-                }, 5000); // 5秒
+                }, 7000); // 秒
             }
 
             // 如果是第五頁，根據已選中的頁面計算星座
