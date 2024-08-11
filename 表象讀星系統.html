@@ -185,24 +185,22 @@
         let detectionComplete = false;
 
         function showPage(pageNumber) {
-            // 停止所有计时器
-            for (let key in timeouts) {
-                clearTimeout(timeouts[key]);
-            }
-
-            // 隐藏所有页面
+            // 清除所有計時器，避免計時繼續
+            clearTimeouts();
+            
+            // 隱藏所有頁面
             var pages = document.querySelectorAll('.page');
             pages.forEach(function(page) {
                 page.classList.remove('active');
             });
 
-            // 显示当前页面
+            // 顯示當前頁面
             document.getElementById('page' + pageNumber).classList.add('active');
 
-            // 如果检测已完成，不再进行任何检测
+            // 如果檢測已完成，不再進行任何檢測
             if (detectionComplete) return;
 
-            // 计时并记录超过6秒的页面
+            // 計時並記錄超過6秒的頁面
             if (pageNumber >= 1 && pageNumber <= 4) {
                 timeouts[pageNumber] = setTimeout(function() {
                     quadrantState[pageNumber] = true;
@@ -219,12 +217,11 @@
                 }, 6000); // 6秒
             }
 
-            // 如果是第五页，根据已选中的页面计算星座
+            // 如果是第五頁，根據已選中的頁面計算星座
             if (pageNumber === 5) {
-                detectionComplete = true; // 停止所有检测
-                console.log('Displaying star sign based on quadrantState:', quadrantState);
-                const signs = [
-                    "摩羯座", "水瓶座", "雙魚座", "牡羊座", 
+                detectionComplete = true; // 停止檢測
+                let signs = [
+                    "魔羯座", "水瓶座", "雙魚座", "牡羊座", 
                     "金牛座", "雙子座", "巨蟹座", "獅子座", 
                     "處女座", "天秤座", "天蠍座", "射手座"
                 ];
@@ -235,7 +232,7 @@
 
                 console.log('Total sum:', totalSum); // Debugging output
 
-                // 计算索引。确保 index 为 1-12 范围内的数字
+                // 計算索引。確保 index 為 1-12 範圍內的數字
                 let index = totalSum % 12 || 12;
                 console.log('Index:', index); // Debugging output
 
@@ -247,15 +244,31 @@
         }
 
         function showCoverPage() {
-            // Show cover page
+            // 清除所有計時器
+            clearTimeouts();
+            
+            // 重置 quadrantState
+            quadrantState = {1: false, 2: false, 3: false, 4: false};
+
+            // 顯示封面頁
             document.getElementById('cover').classList.add('active');
-            // Hide all other pages
+
+            // 隱藏所有其他頁面
             var pages = document.querySelectorAll('.page');
             pages.forEach(function(page) {
                 if (page.id !== 'cover') {
                     page.classList.remove('active');
                 }
             });
+        }
+
+        function clearTimeouts() {
+            for (let key in timeouts) {
+                if (timeouts[key]) {
+                    clearTimeout(timeouts[key]);
+                    timeouts[key] = null;
+                }
+            }
         }
     </script>
 </body>
