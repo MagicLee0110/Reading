@@ -179,15 +179,21 @@
         </div>
     </div>
     <script>
-        let quadrantValues = {1: 1, 2: 2, 3: 4, 4: 8}; // 替换为实际值
+        let quadrantValues = {1: 1, 2: 2, 3: 4, 4: 8}; 
         let timeouts = {};
         let quadrantState = {1: false, 2: false, 3: false, 4: false};
         let detectionComplete = false;
 
+        function clearAllTimers() {
+            for (let key in timeouts) {
+                clearTimeout(timeouts[key]);
+            }
+            timeouts = {};
+        }
+
         function showPage(pageNumber) {
-            // 清除所有計時器，避免計時繼續
-            clearTimeouts();
-            
+            clearAllTimers();
+
             // 隱藏所有頁面
             var pages = document.querySelectorAll('.page');
             pages.forEach(function(page) {
@@ -197,78 +203,46 @@
             // 顯示當前頁面
             document.getElementById('page' + pageNumber).classList.add('active');
 
-            // 如果檢測已完成，不再進行任何檢測
             if (detectionComplete) return;
 
-            // 計時並記錄超過6秒的頁面
             if (pageNumber >= 1 && pageNumber <= 4) {
                 timeouts[pageNumber] = setTimeout(function() {
                     quadrantState[pageNumber] = true;
-                    console.log('Page ' + pageNumber + ' exceeded 6 seconds');
                     const quadrantElement = document.getElementById('quadrant' + pageNumber);
                     if (quadrantElement) {
                         let text = quadrantElement.innerHTML;
-                        // 插入空白字符到文本中間
                         let midpoint = Math.floor(text.length / 2);
                         let updatedText = text.slice(0, midpoint) + '&#8202;' + text.slice(midpoint);
                         quadrantElement.innerHTML = updatedText;
                         quadrantElement.classList.add('quadrant-updated');
                     }
-                }, 6000); // 6秒
+                }, 6000);
             }
 
-            // 如果是第五頁，根據已選中的頁面計算星座
             if (pageNumber === 5) {
-                detectionComplete = true; // 停止檢測
-                let signs = [
-                    "魔羯座", "水瓶座", "雙魚座", "牡羊座", 
-                    "金牛座", "雙子座", "巨蟹座", "獅子座", 
-                    "處女座", "天秤座", "天蠍座", "射手座"
+                detectionComplete = true;
+                const signs = [
+                    "摩羯座", "水瓶座", "雙魚座", "牡羊座", "金牛座", "雙子座",
+                    "巨蟹座", "獅子座", "處女座", "天秤座", "天蠍座", "射手座"
                 ];
-
-                let totalSum = Object.keys(quadrantState).reduce((sum, key) => {
-                    return quadrantState[key] ? sum + quadrantValues[key] : sum;
-                }, 0);
-
-                console.log('Total sum:', totalSum); // Debugging output
-
-                // 計算索引。確保 index 為 1-12 範圍內的數字
-                let index = totalSum % 12 || 12;
-                console.log('Index:', index); // Debugging output
-
-                let starSign = signs[index - 1];
-
-                document.getElementById('star-sign').innerHTML = starSign;
+                let result = 0;
+                for (let key in quadrantState) {
+                    if (quadrantState[key]) {
+                        result += quadrantValues[key];
+                    }
+                }
+                const starSign = signs[(result - 1 + 12) % 12]; // 修正索引計算
+                document.getElementById('star-sign').innerText = starSign;
                 document.getElementById('star-sign').style.display = 'block';
             }
         }
 
         function showCoverPage() {
-            // 清除所有計時器
-            clearTimeouts();
-            
-            // 重置 quadrantState
-            quadrantState = {1: false, 2: false, 3: false, 4: false};
-
-            // 顯示封面頁
-            document.getElementById('cover').classList.add('active');
-
-            // 隱藏所有其他頁面
-            var pages = document.querySelectorAll('.page');
-            pages.forEach(function(page) {
-                if (page.id !== 'cover') {
-                    page.classList.remove('active');
-                }
+            clearAllTimers();
+            document.querySelectorAll('.page').forEach(function(page) {
+                page.classList.remove('active');
             });
-        }
-
-        function clearTimeouts() {
-            for (let key in timeouts) {
-                if (timeouts[key]) {
-                    clearTimeout(timeouts[key]);
-                    timeouts[key] = null;
-                }
-            }
+            document.getElementById('cover').classList.add('active');
         }
     </script>
 </body>
