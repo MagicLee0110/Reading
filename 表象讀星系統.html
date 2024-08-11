@@ -1,130 +1,123 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <title>星座研究</title>
     <style>
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f7f7f7;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    color: #333;
-    box-sizing: border-box; /* Ensure padding is included in height calculation */
-}
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+            box-sizing: border-box;
+        }
 
-.page {
-    display: none;
-    background-color: #fff;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    width: 100%;
-    max-width: 600px; /* Adjust max-width as needed */
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-    box-sizing: border-box; /* Ensure padding is included in width calculation */
-}
+        .page {
+            display: none;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
 
-.active {
-    display: block;
-}
+        .active {
+            display: block;
+        }
 
-button {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 20px;
-    margin-top: 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1em;
-}
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+        }
 
-button:hover {
-    background-color: #45a049;
-}
+        button:hover {
+            background-color: #45a049;
+        }
 
-.quadrant-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    max-width: 600px;
-    margin-bottom: 20px;
-    height: 70vh;
-}
+        .quadrant-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 20px;
+            height: 70vh;
+        }
 
-.quadrant {
-    background-color: #4CAF50;
-    color: white;
-    width: 48%;
-    height: 48%;
-    margin: 1%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    font-size: 2em;
-    border-radius: 10px;
-    text-align: center;
-    position: relative;
-}
+        .quadrant {
+            background-color: #4CAF50;
+            color: white;
+            width: 48%;
+            height: 48%;
+            margin: 1%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 2em;
+            border-radius: 10px;
+            text-align: center;
+            position: relative;
+        }
 
-.quadrant-updated::after {
-    content: '.';
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-    font-size: 0.5em;
-    color: red;
-}
+        .quadrant-updated {
+            /* No need for ::after since we're handling text updates in JS */
+        }
 
-#page5 p {
-    font-size: 1.2em;
-    margin: 10px 0;
-}
+        #page5 p {
+            font-size: 1.2em;
+            margin: 10px 0;
+        }
 
-#text-display {
-    font-size: 1.2em;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 80vh;
-    text-align: center;
-}
+        #text-display {
+            font-size: 1.2em;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 80vh;
+            text-align: center;
+        }
 
-#star-sign {
-    color: #FF4500; /* 星座文字顏色 */
-    font-size: 2.5em; /* 字體大小 */
-    font-weight: bold; /* 字體加粗 */
-    display: none; /* 隱藏元素 */
-}
+        #star-sign {
+            color: #FF4500;
+            font-size: 2.5em;
+            font-weight: bold;
+            display: none;
+        }
 
-/* Ensure mobile compatibility */
-@media (max-width: 600px) {
-    .page {
-        padding: 10px;
-    }
+        @media (max-width: 600px) {
+            .page {
+                padding: 10px;
+            }
 
-    #text-display p {
-        font-size: 1em;
-    }
+            #text-display p {
+                font-size: 1em;
+            }
 
-    #star-sign {
-        font-size: 2em;
-    }
-}
-
+            #star-sign {
+                font-size: 2em;
+            }
+        }
     </style>
 </head>
 <body>
@@ -144,8 +137,8 @@ button:hover {
         <!-- 第一頁 -->
         <div id="page1" class="page">
             <h2>聽覺型人格</h2>
-	    <p>人格介紹:習慣先用雙耳去接收世界，善於聆聽，喜愛音樂，喜歡與人聊天，但容易被聲音騷擾，這類的人通常能清楚表達自我的想法，且在乎細節。</p>
-	    <p>特點:在乎細節、注重文字、按部就班、通常較內向</p>
+            <p>人格介紹:習慣先用雙耳去接收世界，善於聆聽，喜愛音樂，喜歡與人聊天，但容易被聲音騷擾，這類的人通常能清楚表達自我的想法，且在乎細節。</p>
+            <p>特點:在乎細節、注重文字、按部就班、通常較內向</p>
             <p>符合星座:魔羯座、雙魚座、金牛座、巨蟹座、處女座、天蠍座</p>
             <button onclick="showCoverPage()">返回封面</button>
         </div>
@@ -153,8 +146,8 @@ button:hover {
         <!-- 第二頁 -->
         <div id="page2" class="page">
             <h2>視覺型人格</h2>
-	    <p>人格介紹:習慣先用雙眼去接收世界，善於用眼睛觀察，說話較快，心情起伏大，善於表達情緒，但較難記住他人說話的指示。</p>
-	    <p>特點:節奏快、多變化、坐不穩、喜歡鮮明顏色、通常較外向</p>
+            <p>人格介紹:習慣先用雙眼去接收世界，善於用眼睛觀察，說話較快，心情起伏大，善於表達情緒，但較難記住他人說話的指示。</p>
+            <p>特點:節奏快、多變化、坐不穩、喜歡鮮明顏色、通常較外向</p>
             <p>符合星座:水瓶座、雙魚座、雙子座、巨蟹座、天秤座、天蠍座</p>
             <button onclick="showCoverPage()">返回封面</button>
         </div>
@@ -162,8 +155,8 @@ button:hover {
         <!-- 第三頁 -->
         <div id="page3" class="page">
             <h2>感覺型人格</h2>
-	    <p>人格介紹:習慣先用心去體會世界，說話聲音較緩慢，且較為溫馴，喜歡肢體接觸，較關心內心感受。</p>
-	    <p>特點:注重人與人之間的關係、喜歡被關注</p>
+            <p>人格介紹:習慣先用心去體會世界，說話聲音較緩慢，且較為溫馴，喜歡肢體接觸，較關心內心感受。</p>
+            <p>特點:注重人與人之間的關係、喜歡被關注</p>
             <p>符合星座:牡羊座、金牛座、雙子座、巨蟹座、射手座</p>
             <button onclick="showCoverPage()">返回封面</button>
         </div>
@@ -171,98 +164,63 @@ button:hover {
         <!-- 第四頁 -->
         <div id="page4" class="page">
             <h2>綜合型人格</h2>
-	    <p>人格介紹:善於用雙眼及雙耳同時接收世界，擁有超越情感、聽覺和視覺等認知元素，他們行事堅守原則和規矩，這種型格的人，喜愛思考、能言善辯，表現理性和客觀，唯有時給人一種欠缺感性和冷冰冰的感覺。他們的呼吸與觸覺型的人一樣深沉，然而他們說話時音調較平坦，好像電腦的聲頻一樣。與你說話時常擺出沉思的手勢，眼睛凝視說話對象，表現抽離冷漠</p>
-	    <p>特點:做事勤快有條理、做事有一定的執行能力，但往往忽略他人感受</p>
+            <p>人格介紹:善於用雙眼及雙耳同時接收世界，擁有超越情感、聽覺和視覺等認知元素，他們行事堅守原則和規矩，這種型格的人，喜愛思考、能言善辯，表現理性和客觀，唯有時給人一種欠缺感性和冷冰冰的感覺。他們的呼吸與觸覺型的人一樣深沉，然而他們說話時音調較平坦，好像電腦的聲頻一樣。與你說話時常擺出沉思的手勢，眼睛凝視說話對象，表現抽離冷漠</p>
+            <p>特點:做事勤快有條理、做事有一定的執行能力，但往往忽略他人感受</p>
             <p>符合星座:獅子座、處女座、天秤座、天蠍座、射手座</p>
             <button onclick="showCoverPage()">返回封面</button>
         </div>
 
         <!-- 第五頁 -->
         <div id="page5" class="page">
-            <h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Predition&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2>
-            <div id="text-display">
-                <p>星座預測結果為:&nbsp;&nbsp;</p>
-                <p id="star-sign">星座顯示區</p>
-            </div>
+            <h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Prediction&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2>
+            <p>你的星座是:</p>
+            <p id="star-sign"></p>
             <button onclick="showCoverPage()">返回封面</button>
         </div>
     </div>
-
     <script>
-	// 阻止 F12 開發者工具
-	document.addEventListener("keydown", function (e) {
-  	  if (e.keyCode == 123) {
-       	  e.preventDefault();
-          alert("此網頁禁止使用F12");
-        	}
-   	 });
-
-	// 禁用右鍵點擊
-	document.addEventListener("contextmenu", function (e) {
-          e.preventDefault();
-          alert("此網頁禁止使用右鍵");
-    		});
-
-	// 禁用 Ctrl+u 組合鍵
-	document.addEventListener("keydown", function (e) {
-    	if (e.ctrlKey && e.key === "u") {
-          e.preventDefault();
-          alert("此網頁禁止使用Ctrl+U 組合鍵");
-        	}
-    	});
-
-	// 禁用 Ctrl+U 組合鍵
-	document.addEventListener("keydown", function (e) {
-    	if (e.ctrlKey && e.key === "U") {
-          e.preventDefault();
-          alert("此網頁禁止使用Ctrl+U 組合鍵");
-        	}
-    	});
+        let quadrantValues = {1: 1, 2: 2, 3: 4, 4: 8}; // 替换为实际值
         let timeouts = {};
-        let quadrantState = {
-            1: false,
-            2: false,
-            3: false,
-            4: false
-        };
+        let quadrantState = {1: false, 2: false, 3: false, 4: false};
         let detectionComplete = false;
 
-        let quadrantValues = {
-            1: 1,
-            2: 2,
-            3: 4,
-            4: 8
-        };
-
         function showPage(pageNumber) {
-            // 停止所有計時器
+            // 停止所有计时器
             for (let key in timeouts) {
                 clearTimeout(timeouts[key]);
             }
 
-            // 隱藏所有頁面
+            // 隐藏所有页面
             var pages = document.querySelectorAll('.page');
             pages.forEach(function(page) {
                 page.classList.remove('active');
             });
 
-            // 顯示當前頁面
+            // 显示当前页面
             document.getElementById('page' + pageNumber).classList.add('active');
 
-            // 如果偵測已完成，不再進行任何偵測
+            // 如果检测已完成，不再进行任何检测
             if (detectionComplete) return;
 
-            // 計時並記錄超過7秒的頁面
+            // 计时并记录超过7秒的页面
             if (pageNumber >= 1 && pageNumber <= 4) {
                 timeouts[pageNumber] = setTimeout(function() {
                     quadrantState[pageNumber] = true;
                     console.log('Page ' + pageNumber + ' exceeded 7 seconds');
-                    document.getElementById('quadrant' + pageNumber).classList.add('quadrant-updated');
+                    const quadrantElement = document.getElementById('quadrant' + pageNumber);
+                    if (quadrantElement) {
+                        let text = quadrantElement.innerHTML;
+                        let midpoint = Math.floor(text.length / 2);
+                        // Insert two spaces at the midpoint
+                        quadrantElement.innerHTML = text.slice(0, midpoint) + '&#8202;' + text.slice(midpoint);
+                        quadrantElement.classList.add('quadrant-updated');
+                    }
                 }, 7000); // 7秒
             }
 
-            // 如果是第五頁，根據已選中的頁面計算星座
+            // 如果是第五页，根据已选中的页面计算星座
             if (pageNumber === 5) {
+                detectionComplete = true; // 停止所有检测
                 console.log('Displaying star sign based on quadrantState:', quadrantState);
                 const signs = [
                     "摩羯座", "水瓶座", "雙魚座", "牡羊座", 
@@ -274,7 +232,9 @@ button:hover {
                     return quadrantState[key] ? sum + quadrantValues[key] : sum;
                 }, 0);
 
+                console.log('Total sum:', totalSum); // Debugging output
                 let index = (totalSum % 12) || 1;
+                console.log('Index:', index); // Debugging output
                 let starSign = signs[index - 1];
 
                 document.getElementById('star-sign').innerHTML = starSign;
@@ -283,7 +243,9 @@ button:hover {
         }
 
         function showCoverPage() {
+            // Show cover page
             document.getElementById('cover').classList.add('active');
+            // Hide all other pages
             var pages = document.querySelectorAll('.page');
             pages.forEach(function(page) {
                 if (page.id !== 'cover') {
