@@ -81,7 +81,7 @@
         }
 
         .quadrant-updated {
-            /* No need for ::after since we're handling text updates in JS */
+            /* CSS for updated quadrant, if needed */
         }
 
         #page5 p {
@@ -140,7 +140,7 @@
             <p><strong>人格介紹</strong>:</br>習慣先用雙耳去接收世界，喜歡以耳感知，並依賴於語言資訊，善於聆聽，喜愛音樂，喜歡與人聊天，但容易被聲音騷擾，對某些聲音和詞句會特別敏感，通常能清楚表達自我的想法，且在乎細節，這類的人常用與聽覺相關的詞彙，如「聽起來」、「談論」、「聲音」、「共鳴」等。</p>
             <p><strong>特點</strong>:</br>在乎細節、注重文字、按部就班、通常較內向</p>
             <p><strong>符合星座:</br>魔羯座、雙魚座、金牛座、巨蟹座、處女座、天蠍座</strong></p>
-            <button onclick="showCoverPage()">返回封面</button>
+            <button onclick="showCoverPage()">返回</button>
         </div>
 
         <!-- 第二頁 -->
@@ -149,7 +149,7 @@
             <p><strong>人格介紹</strong>:</br>習慣先用雙眼去接收世界，主要用眼來與周圍世界溝通，並較依靠視覺化來記憶與做決定，善於用眼睛觀察，不容易被聲音干擾，較注重外表，說話較快，心情起伏大，善於表達情緒，但較難記住他人說話的指示，這類的他們常用與視覺相關的詞彙，如「看起來」、「觀察」、「顯示」、「透過我的眼睛」等。</p>
             <p><strong>特點</strong>:</br>節奏快、多變化、坐不穩、喜歡鮮明顏色、通常較外向</p>
             <p><strong>符合星座:</br>水瓶座、雙魚座、雙子座、巨蟹座、天秤座、天蠍座</strong></p>
-            <button onclick="showCoverPage()">返回封面</button>
+            <button onclick="showCoverPage()">返回</button>
         </div>
 
         <!-- 第三頁 -->
@@ -158,7 +158,7 @@
             <p><strong>人格介紹</strong>:</br>人傾向於通過動作、觸覺或情感來處理信息。他們會通過「感覺」來理解事物，這種感覺可以是身體上的或情感上的，對身體感受變化特別敏感（如舒適度、溫度），通常說話聲音較緩慢，且較為溫馴，喜歡肢體接觸，較關心內心感受，喜歡實踐學習，這類的人常用與感覺相關的詞彙，如「感覺」、「抓住」、「掌握」、「觸碰」等。</p>
             <p><strong>特點</strong>:</br>注重人與人之間的關係、喜歡被關注</p>
             <p><strong>符合星座:</br>牡羊座、金牛座、雙子座、巨蟹座、射手座</strong></p>
-            <button onclick="showCoverPage()">返回封面</button>
+            <button onclick="showCoverPage()">返回</button>
         </div>
 
         <!-- 第四頁 -->
@@ -167,7 +167,7 @@
             <p><strong>人格介紹</strong>:</br>綜合型人格是指一個人在不同情境下，能夠靈活地使用多種表象系統，而不僅限於一種主要的感官系統。這種人格特質的人往往具備更高的適應能力，能夠根據情況選擇最合適的感知方式來處理信息和溝通，他們傾向於同時使用多個感官來處理信息，這使得他們能夠更全面地理解和記住事物。例如，在學習新知識時，他們可能會結合閱讀、聽講和動手實踐來增強理解，這類人格在面對變化和挑戰時往往能夠更快適應。他們能夠靈活調整自己的思維和行為，以應對不同的情況和需求，並在複雜的情境中保持平衡。。</p>
             <p><strong>特點</strong>:</br>做事勤快有條理、做事有一定的執行能力，但往往忽略他人感受</p>
             <p><strong>符合星座:</br>獅子座、處女座、天秤座、天蠍座、射手座</strong></p>
-            <button onclick="showCoverPage()">返回封面</button>
+            <button onclick="showCoverPage()">返回</button>
         </div>
 
         <!-- 第五頁 -->
@@ -175,7 +175,7 @@
             <h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;預測結果&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2>
             <p>我會想到的是</p>
             <p id="star-sign"></p>
-            <button onclick="showCoverPage()">返回封面</button>
+            <button onclick="showCoverPage()">返回</button>
         </div>
     </div>
     <script>
@@ -202,17 +202,18 @@
             // 如果检测已完成，不再进行任何检测
             if (detectionComplete) return;
 
-            // 计时并记录超过7秒的页面
+            // 计时并记录超过6秒的页面
             if (pageNumber >= 1 && pageNumber <= 4) {
                 timeouts[pageNumber] = setTimeout(function() {
                     quadrantState[pageNumber] = true;
-                    console.log('Page ' + pageNumber + ' exceeded 7 seconds');
+                    console.log('Page ' + pageNumber + ' exceeded 6 seconds');
                     const quadrantElement = document.getElementById('quadrant' + pageNumber);
                     if (quadrantElement) {
                         let text = quadrantElement.innerHTML;
+                        // 插入空白字符到文本中間
                         let midpoint = Math.floor(text.length / 2);
-                        // Insert two spaces at the midpoint
-                        quadrantElement.innerHTML = text.slice(0, midpoint) + '&#8202;' + text.slice(midpoint);
+                        let updatedText = text.slice(0, midpoint) + '&#8202;' + text.slice(midpoint);
+                        quadrantElement.innerHTML = updatedText;
                         quadrantElement.classList.add('quadrant-updated');
                     }
                 }, 6000); // 6秒
