@@ -81,11 +81,11 @@ button:hover {
 }
 
 .quadrant-updated::after {
-    content: '。';
+    content: '.';
     position: absolute;
     bottom: 10px;
     right: 10px;
-    font-size: 2em;
+    font-size: 0.5em;
     color: red;
 }
 
@@ -138,14 +138,14 @@ button:hover {
                 <div id="quadrant3" class="quadrant" onclick="showPage(3)">感覺型人格</div>
                 <div id="quadrant4" class="quadrant" onclick="showPage(4)">綜合型人格</div>
             </div>
-            <button id="cover-button" onclick="showPage(5)">原理解說</button>
+            <button id="cover-button" onclick="showPage(5)">研究結果</button>
         </div>
 
         <!-- 第一頁 -->
         <div id="page1" class="page">
             <h2>聽覺型人格</h2>
 	    <p>人格介紹:先用雙耳去接收。👉在乎細節、注重文字、按部就班、通常較內向</p>
-            <p>符合星座:魔羯座、雙魚座、金牛座、巨蟹座、處座、天蠍座</p>
+            <p>符合星座:魔羯座、雙魚座、金牛座、巨蟹座、處女座、天蠍座</p>
             <button onclick="showCoverPage()">返回封面</button>
         </div>
 
@@ -175,11 +175,11 @@ button:hover {
 
         <!-- 第五頁 -->
         <div id="page5" class="page">
-            <h2>原理解說</h2>
+            <h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Predition&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2>
             <div id="text-display">
-                <p id="text-line">嗨 螢幕前的你</p>
+                <p>星座預測結果為:&nbsp;&nbsp;</p>
+                <p id="star-sign">星座顯示區</p>
             </div>
-            <p id="star-sign">星座顯示區</p> <!-- 隱藏的元素 -->
             <button onclick="showCoverPage()">返回封面</button>
         </div>
     </div>
@@ -230,19 +230,6 @@ button:hover {
             4: 8
         };
 
-        const textLines = [
-            '嗨 螢幕前的你',
-            '我想你一定很想知道為什麼',
-            '就讓我來告訴你',
-            '其實',
-            '這個研究並不是一個星座研究',
-            '而是一個預言的研究',
-            '而我預言的星座就是',
-            '星座顯示區'  // 最後一行將會被替換為計算出的星座
-        ];
-
-        let currentLineIndex = 0;
-
         function showPage(pageNumber) {
             // 停止所有計時器
             for (let key in timeouts) {
@@ -266,75 +253,39 @@ button:hover {
                 timeouts[pageNumber] = setTimeout(function() {
                     quadrantState[pageNumber] = true;
                     console.log('Page ' + pageNumber + ' exceeded 7 seconds');
-                    // 增加「。」字元到象限的元素上
                     document.getElementById('quadrant' + pageNumber).classList.add('quadrant-updated');
-                }, 7000); // 秒
+                }, 7000); // 7秒
             }
 
             // 如果是第五頁，根據已選中的頁面計算星座
             if (pageNumber === 5) {
                 console.log('Displaying star sign based on quadrantState:', quadrantState);
                 const signs = [
-                    "摩羯座", // 1
-                    "水瓶座", // 2
-                    "雙魚座", // 3
-                    "牡羊座", // 4
-                    "金牛座", // 5
-                    "雙子座", // 6
-                    "巨蟹座", // 7
-                    "獅子座", // 8
-                    "處女座", // 9
-                    "天蠍座", // 10
-                    "天秤座", // 11
-                    "射手座"  // 12
+                    "摩羯座", "水瓶座", "雙魚座", "牡羊座", 
+                    "金牛座", "雙子座", "巨蟹座", "獅子座", 
+                    "處女座", "天蠍座", "天秤座", "射手座"
                 ];
 
-                // 計算已選中的象限數值和
                 let totalSum = Object.keys(quadrantState).reduce((sum, key) => {
                     return quadrantState[key] ? sum + quadrantValues[key] : sum;
                 }, 0);
 
-                // 計算星座
                 let index = (totalSum % 12) || 1;
                 let starSign = signs[index - 1];
 
-                // 替換最後一行的文本為計算出的星座
-                textLines[textLines.length - 1] = starSign;
-
-                // 顯示文本行
-                showNextLine();
+                document.getElementById('star-sign').innerHTML = starSign;
+                document.getElementById('star-sign').style.display = 'block';
             }
         }
 
         function showCoverPage() {
-            // 停止所有計時器
-            for (let key in timeouts) {
-                clearTimeout(timeouts[key]);
-            }
-            document.querySelectorAll('.page').forEach(function(page) {
-                page.classList.remove('active');
-            });
             document.getElementById('cover').classList.add('active');
-        }
-
-        function showNextLine() {
-            if (currentLineIndex < textLines.length) {
-                let textLineElement = document.getElementById('text-line');
-                textLineElement.innerHTML = textLines[currentLineIndex];
-
-                // 檢查是否為最後一行
-                if (currentLineIndex === textLines.length - 1) {
-                    textLineElement.style.color = '#FF4500'; // 星座文字顏色
-                    textLineElement.style.fontSize = '2.5em'; // 字體大小
-                    textLineElement.style.fontWeight = 'bold'; // 字體加粗
+            var pages = document.querySelectorAll('.page');
+            pages.forEach(function(page) {
+                if (page.id !== 'cover') {
+                    page.classList.remove('active');
                 }
-
-                currentLineIndex++;
-                setTimeout(showNextLine, 3000); // 每行顯示3秒
-            } else {
-                // 隱藏星座顯示區
-                document.getElementById('star-sign').style.display = 'none';
-            }
+            });
         }
     </script>
 </body>
