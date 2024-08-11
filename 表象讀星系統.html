@@ -172,8 +172,8 @@
 
         <!-- 第五頁 -->
         <div id="page5" class="page">
-            <h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Prediction&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2>
-            <p>星座預測結果為:</p>
+            <h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;預測結果&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2>
+            <p>我會想到的是</p>
             <p id="star-sign"></p>
             <button onclick="showCoverPage()">返回封面</button>
         </div>
@@ -225,7 +225,7 @@
                 const signs = [
                     "摩羯座", "水瓶座", "雙魚座", "牡羊座", 
                     "金牛座", "雙子座", "巨蟹座", "獅子座", 
-                    "處女座", "天蠍座", "天秤座", "射手座"
+                    "處女座", "天秤座", "天蠍座", "射手座"
                 ];
 
                 let totalSum = Object.keys(quadrantState).reduce((sum, key) => {
@@ -233,8 +233,11 @@
                 }, 0);
 
                 console.log('Total sum:', totalSum); // Debugging output
-                let index = (totalSum % 12) || 1;
+
+                // 计算索引。确保 index 为 1-12 范围内的数字
+                let index = totalSum % 12 || 12;
                 console.log('Index:', index); // Debugging output
+
                 let starSign = signs[index - 1];
 
                 document.getElementById('star-sign').innerHTML = starSign;
