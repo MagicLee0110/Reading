@@ -105,6 +105,12 @@
             display: none;
         }
 
+        #gender-text {
+            color: #FF4500;
+            font-size: 2.5em;
+            font-weight: bold;
+        }
+
         @media (max-width: 600px) {
             .page {
                 padding: 10px;
@@ -131,14 +137,14 @@
                 <div id="quadrant3" class="quadrant" onclick="showPage(3)">感覺型人格</div>
                 <div id="quadrant4" class="quadrant" onclick="showPage(4)">綜合型人格</div>
             </div>
-            <button id="cover-button" onclick="showPage(5)">研究結果</button>
+            <button id="cover-button" onclick="determineGender(event)">研究結果</button>
         </div>
 
         <!-- 第一頁 -->
         <div id="page1" class="page">
             <h2>聽覺型人格</h2>
             <p><strong>人格介紹</strong>:</br>習慣先用雙耳去接收世界，喜歡以耳感知，並依賴於語言資訊，善於聆聽，喜愛音樂，喜歡與人聊天，但容易被聲音騷擾，對某些聲音和詞句會特別敏感，通常能清楚表達自我的想法，且在乎細節，這類的人常用與聽覺相關的詞彙，如「聽起來」、「談論」、「聲音」、「共鳴」等。</p>
-            <p><strong>特點</strong>:</br>在乎細節、注重文字、按部就班、通常較內向</p>
+            <p><strong>特點</strong>:<br>在乎細節、注重文字、按部就班、通常較內向</p>
             <p><strong>符合星座:</br>魔羯座、雙魚座、金牛座、巨蟹座、處女座、天蠍座</strong></p>
             <button onclick="showCoverPage()">返回</button>
         </div>
@@ -147,7 +153,7 @@
         <div id="page2" class="page">
             <h2>視覺型人格</h2>
             <p><strong>人格介紹</strong>:</br>習慣先用雙眼去接收世界，主要用眼來與周圍世界溝通，並較依靠視覺化來記憶與做決定，善於用眼睛觀察，不容易被聲音干擾，較注重外表，說話較快，心情起伏大，善於表達情緒，但較難記住他人說話的指示，這類的他們常用與視覺相關的詞彙，如「看起來」、「觀察」、「顯示」、「透過我的眼睛」等。</p>
-            <p><strong>特點</strong>:</br>節奏快、多變化、坐不穩、喜歡鮮明顏色、通常較外向</p>
+            <p><strong>特點</strong>:<br>節奏快、多變化、坐不穩、喜歡鮮明顏色、通常較外向</p>
             <p><strong>符合星座:</br>水瓶座、雙魚座、雙子座、巨蟹座、天秤座、天蠍座</strong></p>
             <button onclick="showCoverPage()">返回</button>
         </div>
@@ -156,7 +162,7 @@
         <div id="page3" class="page">
             <h2>感覺型人格</h2>
             <p><strong>人格介紹</strong>:</br>人傾向於通過動作、觸覺或情感來處理信息。他們會通過「感覺」來理解事物，這種感覺可以是身體上的或情感上的，對身體感受變化特別敏感（如舒適度、溫度），通常說話聲音較緩慢，且較為溫馴，喜歡肢體接觸，較關心內心感受，喜歡實踐學習，這類的人常用與感覺相關的詞彙，如「感覺」、「抓住」、「掌握」、「觸碰」等。</p>
-            <p><strong>特點</strong>:</br>注重人與人之間的關係、喜歡被關注</p>
+            <p><strong>特點</strong>:<br>注重人與人之間的關係、喜歡被關注</p>
             <p><strong>符合星座:</br>牡羊座、金牛座、雙子座、巨蟹座、射手座</strong></p>
             <button onclick="showCoverPage()">返回</button>
         </div>
@@ -165,7 +171,7 @@
         <div id="page4" class="page">
             <h2>綜合型人格</h2>
             <p><strong>人格介紹</strong>:</br>綜合型人格是指一個人在不同情境下，能夠靈活地使用多種表象系統，而不僅限於一種主要的感官系統。這種人格特質的人往往具備更高的適應能力，能夠根據情況選擇最合適的感知方式來處理信息和溝通，他們傾向於同時使用多個感官來處理信息，這使得他們能夠更全面地理解和記住事物。例如，在學習新知識時，他們可能會結合閱讀、聽講和動手實踐來增強理解，這類人格在面對變化和挑戰時往往能夠更快適應。他們能夠靈活調整自己的思維和行為，以應對不同的情況和需求，並在複雜的情境中保持平衡。。</p>
-            <p><strong>特點</strong>:</br>做事勤快有條理、做事有一定的執行能力，但往往忽略他人感受</p>
+            <p><strong>特點</strong>:<br>做事勤快有條理、做事有一定的執行能力，但往往忽略他人感受</p>
             <p><strong>符合星座:</br>獅子座、處女座、天秤座、天蠍座、射手座</strong></p>
             <button onclick="showCoverPage()">返回</button>
         </div>
@@ -173,7 +179,7 @@
         <!-- 第五頁 -->
         <div id="page5" class="page">
             <h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;預測結果&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2>
-            <p>你會想到的是</p>
+            <p id="gender-text">我有一個預感，</br>我今天會遇到一個人，他會想著他的朋友，</br>這位朋友會是一個XX，</p>
             <p id="star-sign"></p>
             <button onclick="showCoverPage()">返回</button>
         </div>
@@ -201,7 +207,11 @@
             });
 
             // 顯示當前頁面
-            document.getElementById('page' + pageNumber).classList.add('active');
+            if (pageNumber === 0) {
+                document.getElementById('cover').classList.add('active');
+            } else {
+                document.getElementById('page' + pageNumber).classList.add('active');
+            }
 
             if (detectionComplete) return;
 
@@ -222,27 +232,70 @@
             if (pageNumber === 5) {
                 detectionComplete = true;
                 const signs = [
-                    "摩羯座", "水瓶座", "雙魚座", "牡羊座", "金牛座", "雙子座",
-                    "巨蟹座", "獅子座", "處女座", "天秤座", "天蠍座", "射手座"
+                    "從外表上他看起來會聽覺型人格，</br>但我感覺這個人很特別，</br>在NLP裡面似乎沒有一個性格可以完全解釋他，</br>因為他有著獨一無二的人格特質，</br></br>沒錯的話，</br>他的星座會是土象星座中的摩羯座!", 
+
+"從外表上他看起來會是視覺型的人格，</br>但我感覺這個人很特別，</br>在NLP裡面似乎沒有一個性格可以完全解釋他，</br>因為他有著獨一無二的人格特質，</br></br>沒錯的話，</br>他的星座會是風象星座中的水瓶座!", 
+
+"從外表上他看起來會是聽覺型人格和視覺型人格的綜合體，</br>但我感覺這個人很特別，</br>在NLP裡面似乎沒有一個性格可以完全解釋他，</br>因為他有著獨一無二的人格特質，</br></br>沒錯的話，</br>他的星座會是水象星座中的雙魚座!",
+
+"從外表上他看起來會是感覺型的人格，</br>但我感覺這個人很特別，</br>在NLP裡面似乎沒有一個性格可以完全解釋他，</br>因為他有著獨一無二的人格特質，</br></br>沒錯的話，</br>他的星座會是火象星座中的牡羊座!", 
+
+"從外表上他看起來會是聽覺型人格和感覺型人格的綜合體，</br>但我感覺這個人很特別，</br>在NLP裡面似乎沒有一個性格可以完全解釋他，</br>因為他有著獨一無二的人格特質，</br></br>沒錯的話，</br>他的星座會是土象星座中的金牛座!", 
+
+"從外表上他看起來會是視覺型人格和感覺型人格的綜合體，</br>但我感覺這個人很特別，</br>在NLP裡面似乎沒有一個性格可以完全解釋他，</br>因為他有著獨一無二的人格特質，</br></br>沒錯的話，</br>他的星座會是風象星座中的雙子座!", 
+                    
+"從外表上他看起來會是聽覺型人格、視覺型人格和感覺型人格綜合體，</br>但我感覺這個人很特別，</br>在NLP裡面似乎沒有一個性格可以完全解釋他，</br>因為他有著獨一無二的人格特質，</br></br>沒錯的話，</br>他的星座會是水象星座中的巨蟹座!", 
+
+"從外表上他看起來會是綜合型的人格，</br>但我感覺這個人很特別，</br>在NLP裡面似乎沒有一個性格可以完全解釋他，</br>因為他有著獨一無二的人格特質，</br></br>沒錯的話，</br>他的星座會是火象星座中的獅子座!", 
+
+"從外表上他看起來會是聽覺型人格和綜合型人格的綜合體，</br>但我感覺這個人很特別，</br>在NLP裡面似乎沒有一個性格可以完全解釋他，</br>因為他有著獨一無二的人格特質，</br></br>沒錯的話，</br>他的星座會是土象星座中的處女座!", 
+
+"從外表上他看起來會是視覺型人格和綜合型人格的綜合體，</br>但我感覺這個人很特別，</br>在NLP裡面似乎沒有一個性格可以完全解釋他，</br>因為他有著獨一無二的人格特質，</br></br>沒錯的話，</br>他的星座會是風象星座中的天秤座!", 
+
+"從外表上他看起來會是聽覺型人格、視覺型人格和綜合型人格綜合體，</br>但我感覺這個人很特別，</br>在NLP裡面似乎沒有一個性格可以完全解釋他，</br>因為他有著獨一無二的人格特質，</br></br>沒錯的話，</br>他的星座會是水象星座中的天蠍座!", 
+
+"從外表上他看起來會是感覺型人格和綜合型人格的綜合體，</br>但我感覺這個人很特別，</br>在NLP裡面似乎沒有一個性格可以完全解釋他，</br>因為他有著獨一無二的人格特質，</br></br>沒錯的話，</br>他的星座會是火象星座中的射手座!"
                 ];
-                let result = 0;
-                for (let key in quadrantState) {
-                    if (quadrantState[key]) {
-                        result += quadrantValues[key];
-                    }
-                }
-                const starSign = signs[(result - 1 + 12) % 12]; // 修正索引計算
-                document.getElementById('star-sign').innerText = starSign;
+                const sum = Object.keys(quadrantState)
+                    .filter(key => quadrantState[key])
+                    .reduce((acc, key) => acc + quadrantValues[key], 0);
+
+                const starSign = signs[(sum - 1) % 12];
+                document.getElementById('star-sign').innerHTML = starSign;
                 document.getElementById('star-sign').style.display = 'block';
             }
         }
 
         function showCoverPage() {
-            clearAllTimers();
-            document.querySelectorAll('.page').forEach(function(page) {
-                page.classList.remove('active');
-            });
-            document.getElementById('cover').classList.add('active');
+            showPage(0);
+        }
+
+        function determineGender(event) {
+            if (detectionComplete) {
+                showPage(5); 
+                return;
+            }
+
+            const coverButton = document.getElementById('cover-button');
+            const rect = coverButton.getBoundingClientRect();
+            const clickX = event.clientX - rect.left;
+            const clickY = event.clientY - rect.top;
+            const width = rect.width;
+            const height = rect.height;
+
+            let gender = '';
+            if (clickX < width / 2 && clickY < height / 2) {
+                gender = '男生';
+            } else if (clickX >= width / 2 && clickY < height / 2) {
+                gender = '女生';
+            } else if (clickX < width / 2 && clickY >= height / 2) {
+                gender = '男生';
+            } else if (clickX >= width / 2 && clickY >= height / 2) {
+                gender = '女生';
+            }
+
+            document.getElementById('gender-text').innerHTML = `我有一個預感，</br>我今天會遇到一個人，他會想著他的朋友，</br>這位朋友會是一個${gender}，`;
+            showPage(5);
         }
     </script>
 </body>
