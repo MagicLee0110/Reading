@@ -7,13 +7,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <title>星座研究</title>
     <style>
-@media only screen and (max-width: 600px) {
-    /* 在小於600px寬度的設備上應用的樣式 */
-    .your-element {
-        font-size: 16px;
-        padding: 10px;
-    }
-}
         body {
             font-family: 'Arial', sans-serif;
             background: linear-gradient(135deg, #001F3F, #1A2B52, #3A3F6C);
@@ -211,8 +204,8 @@
 
         <!-- 第五頁 -->
         <div id="page5" class="page">
-            <h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;預測結果&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2>
-            <p id="gender-text">我有一個預感，</br>我今天會遇到一個人，他會想著他的朋友，</br>這位朋友會是一個XX，</p>
+            <h2>預測結果</h2>
+            <p id="gender-text">我有一個預感，</br>我今天會遇到一個人，</br>他會想著他的朋友，</br>這位朋友會是一個XX，</p>
             <p id="star-sign"></p>
             <button onclick="showCoverPage()">返回</button>
         </div>
@@ -327,7 +320,7 @@
                 gender = '女生';
             }
 
-            document.getElementById('gender-text').innerHTML = `我有一個預感，</br>我今天會遇到一個人，他會想著他的朋友，</br>這位朋友會是一個${gender}，`;
+            document.getElementById('gender-text').innerHTML = `我有一個預感，</br>我今天會遇到一個人，</br>他會想著他的朋友，</br>這位朋友會是一個${gender}，`;
             showPage(5);
         }
     </script>
