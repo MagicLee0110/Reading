@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>撲克牌矩陣生成器</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #00aaff, #66aaff);
+            color: #fff;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            margin-top: 30px;
+            font-size: 36px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        .grid {
+            display: grid;
+            gap: 8px;
+            margin: 20px auto;
+            padding: 20px;
+            grid-template-columns: repeat(7, 60px);
+            grid-template-rows: repeat(7, 60px);
+            max-width: 480px;
+            min-height: 420px;
+        }
+        .cell {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #ffffff;
+            color: #333;
+            border: 2px solid #bbb;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 18px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+            transition: background-color 0.2s ease, transform 0.3s ease;
+        }
+        .cell:hover {
+            background-color: #ffcc00;
+            transform: scale(1.05);
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 24px;
+            font-size: 18px;
+            margin: 20px 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        button:active {
+            background-color: #1e7e34;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
+        .container {
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>撲克牌矩陣生成器</h1>
+        <div>
+            <button onclick="generateCards()">隨機生成</button>
+            <button onclick="shuffleGrid()">打亂</button>
+        </div>
+        <div id="grid-container" class="grid"></div>
+    </div>
+
+    <script>
+        const cardNames = [
+            "A♠", "2♠", "3♠", "4♠", "5♠", "6♠", "7♠", "8♠", "9♠", "10♠", "J♠", "Q♠", "K♠",
+            "A♥", "2♥", "3♥", "4♥", "5♥", "6♥", "7♥", "8♥", "9♥", "10♥", "J♥", "Q♥", "K♥",
+            "A♣", "2♣", "3♣", "4♣", "5♣", "6♣", "7♣", "8♣", "9♣", "10♣", "J♣", "Q♣", "K♣",
+            "A♦", "2♦", "3♦", "4♦", "5♦", "6♦", "7♦", "8♦", "9♦", "10♦", "J♦", "Q♦", "K♦",
+        ];
+        let grid = [];
+        let shuffleCount = 0;
+        let firstShuffleGrid = [];
+        let firstShuffleGridReversed = [];
+
+        function initGrid(rows, cols) {
+            const container = document.getElementById('grid-container');
+            container.style.gridTemplateColumns = `repeat(${cols}, 60px)`;
+            container.style.gridTemplateRows = `repeat(${rows}, 60px)`;
+            grid = Array.from({ length: rows }, () => Array(cols).fill("")); // 初始化為空格
+            renderGrid();
+        }
+
+        function renderGrid() {
+            const container = document.getElementById('grid-container');
+            container.innerHTML = '';
+            grid.forEach(row => {
+                row.forEach(cell => {
+                    const cellDiv = document.createElement('div');
+                    cellDiv.className = 'cell';
+                    cellDiv.textContent = cell;
+                    container.appendChild(cellDiv);
+                });
+            });
+        }
+
+        function generateCards() {
+            const shuffledCards = [...cardNames].sort(() => Math.random() - 0.5);
+            let index = 0;
+            for (let i = 0; i < grid.length; i++) {
+                for (let j = 0; j < grid[i].length; j++) {
+                    grid[i][j] = shuffledCards[index++ % shuffledCards.length];
+                }
+            }
+            renderGrid();
+        }
+
+        function shuffleGrid() {
+            shuffleCount++;
+            let shuffledGrid;
+
+            if (shuffleCount === 1) {
+                shuffledGrid = [];
+                const rows = grid.length;
+                const cols = grid[0].length;
+                for (let j = cols - 1; j >= 0; j--) {
+                    const newRow = [];
+                    for (let i = rows - 1; i >= 0; i--) {
+                        newRow.push(grid[i][j]);
+                    }
+                    shuffledGrid.push(newRow);
+                }
+                firstShuffleGrid = [...shuffledGrid];
+                firstShuffleGridReversed = shuffledGrid.map(row => row.slice().reverse());
+            } else if (shuffleCount === 5) {
+                shuffledGrid = firstShuffleGridReversed;
+            } else {
+                const flattenedGrid = grid.flat();
+                shuffledGrid = [];
+                while (flattenedGrid.length) {
+                    const randomIndex = Math.floor(Math.random() * flattenedGrid.length);
+                    shuffledGrid.push(flattenedGrid.splice(randomIndex, 1)[0]);
+                }
+                shuffledGrid = chunk(shuffledGrid, grid[0].length);
+            }
+
+            grid = shuffledGrid;
+            renderGrid();
+        }
+
+        function chunk(array, size) {
+            const result = [];
+            for (let i = 0; i < array.length; i += size) {
+                result.push(array.slice(i, i + size));
+            }
+            return result;
+        }
+
+        initGrid(7, 7);
+    </script>
+</body>
+</html>
