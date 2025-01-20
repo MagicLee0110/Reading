@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
- <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>撲克牌生成與打亂</title>
@@ -23,17 +20,17 @@
         }
         .grid {
             display: grid;
-            gap: 8px;
+            gap: 6px; /* 更小的格子間隙 */
             margin: 20px auto;
             padding: 20px;
-            grid-template-columns: repeat(7, 60px);
-            grid-template-rows: repeat(7, 90px);
-            max-width: 480px;
-            min-height: 630px; /* 根據新的格子高度進行調整 */
+            grid-template-columns: repeat(7, 40px); /* 設置新的寬度 */
+            grid-template-rows: repeat(7, 60px); /* 設置新的高度 */
+            max-width: 280px; /* 減少最大寬度 */
+            min-height: 420px; /* 減少最小高度 */
         }
         .cell {
-            width: 50px;
-            height: 75px;
+            width: 40px; /* 更小的格子寬度 */
+            height: 60px; /* 更小的格子高度 */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -42,7 +39,7 @@
             border: 2px solid #bbb;
             border-radius: 5px;
             font-weight: bold;
-            font-size: 18px;
+            font-size: 14px; /* 增小字體大小 */
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
             transition: background-color 0.2s ease, transform 0.3s ease;
         }
@@ -56,7 +53,7 @@
             border: none;
             border-radius: 8px;
             padding: 12px 24px;
-            font-size: 18px;
+            font-size: 16px;
             margin: 20px 10px;
             cursor: pointer;
             transition: background-color 0.3s ease;
@@ -98,9 +95,9 @@
 
         function initGrid(rows, cols) {
             const container = document.getElementById('grid-container');
-            container.style.gridTemplateColumns = `repeat(${cols}, 60px)`;
-            container.style.gridTemplateRows = `repeat(${rows}, 90px)`; // 新的格子高度
-            grid = Array.from({ length: rows }, () => Array(cols).fill("")); // 初始化為空格
+            container.style.gridTemplateColumns = `repeat(${cols}, 40px)`; /* 新的寬度 */
+            container.style.gridTemplateRows = `repeat(${rows}, 60px)`; /* 新的高度 */
+            grid = Array.from({ length: rows }, () => Array(cols).fill("")); /* 初始化為空格 */
             renderGrid();
         }
 
