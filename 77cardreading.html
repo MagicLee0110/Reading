@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>撲克牌生成與打亂</title>
+    <title>撲克牌矩陣產生器</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -15,6 +15,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            flex-direction: column; /* 垂直排列 */
             height: 100vh;
             overflow: hidden; /* 防止滾動 */
         }
@@ -24,23 +25,31 @@
             text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
         }
         .container {
-            padding: 20px;
-            max-width: 360px;  /* 最大寬度控制 */
-            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             text-align: center;
+            flex-grow: 1; /* 允許內容區域自適應並推動按鈕到頁面底部 */
+        }
+        .grid-wrapper {
+            display: flex;
+            justify-content: flex-start; 
+            align-items: center;
+            margin-top: -20px;
+    	    margin-left: -30px;  /* 調整容器的位置，向左移動 */
         }
         .grid {
             display: grid;
-            gap: 6px; /* 更小的格子間隙 */
-            margin: 20px auto;
-            grid-template-columns: repeat(7, 40px); /* 設置新的寬度 */
-            grid-template-rows: repeat(7, 60px); /* 設置新的高度 */
-            max-width: 280px; /* 減少最大寬度 */
-            min-height: 420px; /* 減少最小高度 */
+            gap: 6px;
+            grid-template-columns: repeat(7, 40px);
+            grid-template-rows: repeat(7, 60px);
+            max-width: 90%;
+            margin: 0 auto;
         }
         .cell {
-            width: 40px; /* 更小的格子寬度 */
-            height: 60px; /* 更小的格子高度 */
+            width: 40px;
+            height: 60px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -49,7 +58,7 @@
             border: 2px solid #bbb;
             border-radius: 5px;
             font-weight: bold;
-            font-size: 14px; /* 增小字體大小 */
+            font-size: 14px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
             transition: background-color 0.2s ease, transform 0.3s ease;
         }
@@ -83,21 +92,22 @@
                 font-size: 28px;
             }
             .grid {
-                grid-template-columns: repeat(5, 40px); /* 精簡格數 */
-                grid-template-rows: repeat(5, 60px); /* 精簡行數 */
+                grid-template-columns: repeat(5, 40px);
+                grid-template-rows: repeat(5, 60px);
             }
         }
-
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>撲克牌生成與打亂</h1>
-        <div>
-            <button onclick="generateCards()">隨機生成</button>
-            <button onclick="shuffleGrid()">打亂</button>
+        <h1>撲克牌矩陣產生器</h1>
+        <div class="grid-wrapper">
+            <div id="grid-container" class="grid"></div>
         </div>
-        <div id="grid-container" class="grid"></div>
+    </div>
+    <div>
+        <button onclick="generateCards()">隨機生成</button>
+        <button onclick="shuffleGrid()">打亂</button>
     </div>
 
     <script>
@@ -114,9 +124,9 @@
 
         function initGrid(rows, cols) {
             const container = document.getElementById('grid-container');
-            container.style.gridTemplateColumns = `repeat(${cols}, 40px)`; /* 新的寬度 */
-            container.style.gridTemplateRows = `repeat(${rows}, 60px)`; /* 新的高度 */
-            grid = Array.from({ length: rows }, () => Array(cols).fill("")); /* 初始化為空格 */
+            container.style.gridTemplateColumns = `repeat(${cols}, 40px)`; 
+            container.style.gridTemplateRows = `repeat(${rows}, 60px)`; 
+            grid = Array.from({ length: rows }, () => Array(cols).fill("")); 
             renderGrid();
         }
 
