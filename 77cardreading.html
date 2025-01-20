@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>撲克牌矩陣生成器</title>
+    <title>撲克牌生成與打亂</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -24,13 +24,13 @@
             margin: 20px auto;
             padding: 20px;
             grid-template-columns: repeat(7, 60px);
-            grid-template-rows: repeat(7, 60px);
+            grid-template-rows: repeat(7, 90px);
             max-width: 480px;
-            min-height: 420px;
+            min-height: 630px; /* 根據新的格子高度進行調整 */
         }
         .cell {
             width: 60px;
-            height: 60px;
+            height: 90px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -73,7 +73,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>撲克牌矩陣生成器</h1>
+        <h1>撲克牌生成與打亂</h1>
         <div>
             <button onclick="generateCards()">隨機生成</button>
             <button onclick="shuffleGrid()">打亂</button>
@@ -96,7 +96,7 @@
         function initGrid(rows, cols) {
             const container = document.getElementById('grid-container');
             container.style.gridTemplateColumns = `repeat(${cols}, 60px)`;
-            container.style.gridTemplateRows = `repeat(${rows}, 60px)`;
+            container.style.gridTemplateRows = `repeat(${rows}, 90px)`; // 新的格子高度
             grid = Array.from({ length: rows }, () => Array(cols).fill("")); // 初始化為空格
             renderGrid();
         }
