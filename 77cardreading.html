@@ -10,7 +10,8 @@
     <meta name="theme-color" content="#66aaff">
     <title>撲克牌矩陣產生器</title>
     <style>
-        * {
+/* 禁止選取功能 */
+* {
     user-select: none; /* 禁止選取文本 */
     -webkit-user-select: none; /* Safari */
     -moz-user-select: none; /* Firefox */
@@ -221,12 +222,24 @@
     // 當按下按鈕時開始計時
     generateButton.addEventListener('mousedown', () => {
         pressTimer = setTimeout(() => {
-            location.reload();  // 持續 3 秒後，重載頁面
-        }, 3000);  // 3秒內按下重設網頁
+            location.reload();  // 持續 5 秒後，重載頁面
+        }, 5000);  // 5秒內按下重設網頁
+    });
+
+    // 支援觸控設備的 touchstart 事件
+    generateButton.addEventListener('touchstart', () => {
+        pressTimer = setTimeout(() => {
+            location.reload();  // 持續 5 秒後，重載頁面
+        }, 5000);
     });
 
     // 若松開按鈕或離開按鈕時停止計時
     generateButton.addEventListener('mouseup', () => {
+        clearTimeout(pressTimer);  // 停止計時器
+    });
+
+    // 支援觸控設備的 touchend 事件
+    generateButton.addEventListener('touchend', () => {
         clearTimeout(pressTimer);  // 停止計時器
     });
 
