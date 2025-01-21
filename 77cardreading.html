@@ -10,6 +10,12 @@
     <meta name="theme-color" content="#66aaff">
     <title>撲克牌矩陣產生器</title>
     <style>
+* {
+    user-select: none; /* 禁止選取文本 */
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer */
+}
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #00aaff, #66aaff);
@@ -117,6 +123,12 @@
     </div>
 
     <script>
+
+    // 禁止長按選擇
+    document.addEventListener('touchstart', function(e) {
+        e.preventDefault(); // 阻止長按選擇功能
+    }, { passive: false });
+
   // 禁止雙擊放大頁面
   document.addEventListener('dblclick', function(event) {
     event.preventDefault();  // 阻止默認的雙擊放大行為
