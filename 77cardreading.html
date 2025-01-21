@@ -2,12 +2,12 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <meta name="theme-color" content="#66aaff ">
+    <meta name="theme-color" content="#66aaff">
     <title>撲克牌矩陣產生器</title>
     <style>
         body {
@@ -25,10 +25,10 @@
             overflow: hidden; /* 防止滾動 */
         }
         h1 {
-            margin-top: -250px;
+            margin-top: 20px;
             font-size: 36px;
             text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-	    color: #CCE7FF;
+            color: #CCE7FF;
         }
 
         .container {
@@ -44,7 +44,7 @@
             justify-content: flex-start; 
             align-items: center;
             margin-top: 0px;
-    	    margin-left: -30px;  /* 調整容器的位置，向左移動 */
+            margin-left: -30px;  /* 調整容器的位置，向左移動 */
         }
         .grid {
             display: grid;
@@ -92,12 +92,6 @@
             background-color: #1e7e34;
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
         }
-        /* 調整按鈕區域的位置，將它置於7x7矩陣下方 */
-        .button-container {
-            margin-top: -250px;
-    	    position: relative; /* 使用相對定位 */
-        }
-
         /* 調整小螢幕設備下的樣式 */
         @media (max-width: 480px) {
             h1 {
@@ -116,10 +110,10 @@
         <div class="grid-wrapper">
             <div id="grid-container" class="grid"></div>
         </div>
-    </div>
-   <div class="button-container">
-        <button onclick="generateCards()">隨機生成</button>
-        <button onclick="shuffleGrid()">打亂</button>
+        <div class="button-container">
+            <button onclick="generateCards()">隨機生成</button>
+            <button onclick="shuffleGrid()">打亂</button>
+        </div>
     </div>
 
     <script>
