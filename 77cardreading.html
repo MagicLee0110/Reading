@@ -235,6 +235,38 @@
 
         initGrid(7, 7);
 
+    // 監聽按鈕，檢測按下 5 秒後重設頁面
+    const generateButton = document.querySelector('button');
+    let pressTimer;
+
+    // 當按下按鈕時開始計時
+    generateButton.addEventListener('mousedown', () => {
+        pressTimer = setTimeout(() => {
+            location.reload();  // 持續 3 秒後，重載頁面
+        }, 3000);  // 3秒內按下重設網頁
+    });
+
+    // 支援觸控設備的 touchstart 事件
+    generateButton.addEventListener('touchstart', () => {
+        pressTimer = setTimeout(() => {
+            location.reload();  // 持續 3 秒後，重載頁面
+        }, 3000);
+    });
+
+    // 若松開按鈕或離開按鈕時停止計時
+    generateButton.addEventListener('mouseup', () => {
+        clearTimeout(pressTimer);  // 停止計時器
+    });
+
+    // 支援觸控設備的 touchend 事件
+    generateButton.addEventListener('touchend', () => {
+        clearTimeout(pressTimer);  // 停止計時器
+    });
+
+    generateButton.addEventListener('mouseleave', () => {
+        clearTimeout(pressTimer);  // 停止計時器
+    });
+
     </script>
 </body>
 </html>
