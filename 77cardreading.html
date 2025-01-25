@@ -147,6 +147,11 @@
     <div class="created-by" onclick="showCreatedByResult()">Created by 李沅泰</div>
 
     <script>
+
+  // 禁止雙擊放大頁面
+  document.addEventListener('dblclick', function(event) {
+    event.preventDefault();  // 阻止默認的雙擊放大行為
+  });
         const cardNames = [
             "A♠", "2♠", "3♠", "4♠", "5♠", "6♠", "7♠", "8♠", "9♠", "10♠", "J♠", "Q♠", "K♠",
             "A♥", "2♥", "3♥", "4♥", "5♥", "6♥", "7♥", "8♥", "9♥", "10♥", "J♥", "Q♥", "K♥",
