@@ -11,9 +11,12 @@
     <title>撲克牌隨機產生器</title>
     <style>
         /* 禁止選取功能 */
-        * {
-            user-select: none;
-        }
+* {
+    user-select: none; /* 禁止選取文本 */
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer */
+}
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
