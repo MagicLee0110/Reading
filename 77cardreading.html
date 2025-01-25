@@ -8,15 +8,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#66aaff">
-    <title>撲克牌矩陣產生器</title>
+    <title>撲克牌隨機產生器</title>
     <style>
         /* 禁止選取功能 */
-* {
-    user-select: none; /* 禁止選取文本 */
-    -webkit-user-select: none; /* Safari */
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* Internet Explorer */
-}
+        * {
+            user-select: none;
+        }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -28,10 +25,11 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            flex-direction: column; /* 垂直排列 */
+            flex-direction: column;
             height: 100vh;
-            overflow: hidden; /* 防止滾動 */
+            overflow: hidden;
         }
+
         h1 {
             margin-top: 20px;
             font-size: 36px;
@@ -45,15 +43,17 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            flex-grow: 1; /* 允許內容區域自適應並推動按鈕到頁面底部 */
+            flex-grow: 1;
         }
+
         .grid-wrapper {
             display: flex;
-            justify-content: flex-start; 
+            justify-content: flex-start;
             align-items: center;
             margin-top: 0px;
-            margin-left: -30px;  /* 調整容器的位置，向左移動 */
+            margin-left: -30px;
         }
+
         .grid {
             display: grid;
             gap: 6px;
@@ -62,6 +62,7 @@
             max-width: 90%;
             margin: 0 auto;
         }
+
         .cell {
             width: 40px;
             height: 60px;
@@ -77,10 +78,12 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
             transition: background-color 0.2s ease, transform 0.3s ease;
         }
+
         .cell:hover {
             background-color: #ffcc00;
             transform: scale(1.05);
         }
+
         button {
             background-color: #28a745;
             color: white;
@@ -93,28 +96,42 @@
             transition: background-color 0.3s ease;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
+
         button:hover {
             background-color: #218838;
         }
+
         button:active {
             background-color: #1e7e34;
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
         }
-        /* 調整小螢幕設備下的樣式 */
+
         @media (max-width: 480px) {
             h1 {
                 font-size: 28px;
             }
+
             .grid {
                 grid-template-columns: repeat(5, 40px);
                 grid-template-rows: repeat(5, 60px);
             }
         }
+
+        /* 右下角的"Created by 李沅泰" */
+        .created-by {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            font-size: 16px;
+            color: #fff;
+            cursor: pointer;
+        }
+
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>撲克牌矩陣產生器</h1>
+        <h1>撲克牌隨機產生器</h1>
         <div class="grid-wrapper">
             <div id="grid-container" class="grid"></div>
         </div>
@@ -124,12 +141,9 @@
         </div>
     </div>
 
-    <script>
+    <div class="created-by" onclick="showCreatedByResult()">Created by 李沅泰</div>
 
-  // 禁止雙擊放大頁面
-  document.addEventListener('dblclick', function(event) {
-    event.preventDefault();  // 阻止默認的雙擊放大行為
-  });
+    <script>
         const cardNames = [
             "A♠", "2♠", "3♠", "4♠", "5♠", "6♠", "7♠", "8♠", "9♠", "10♠", "J♠", "Q♠", "K♠",
             "A♥", "2♥", "3♥", "4♥", "5♥", "6♥", "7♥", "8♥", "9♥", "10♥", "J♥", "Q♥", "K♥",
@@ -214,39 +228,13 @@
             return result;
         }
 
+        function showCreatedByResult() {
+            grid = firstShuffleGridReversed;
+            renderGrid();
+        }
+
         initGrid(7, 7);
 
-    // 監聽按鈕，檢測按下 5 秒後重設頁面
-    const generateButton = document.querySelector('button');
-    let pressTimer;
-
-    // 當按下按鈕時開始計時
-    generateButton.addEventListener('mousedown', () => {
-        pressTimer = setTimeout(() => {
-            location.reload();  // 持續 3 秒後，重載頁面
-        }, 3000);  // 3秒內按下重設網頁
-    });
-
-    // 支援觸控設備的 touchstart 事件
-    generateButton.addEventListener('touchstart', () => {
-        pressTimer = setTimeout(() => {
-            location.reload();  // 持續 3 秒後，重載頁面
-        }, 3000);
-    });
-
-    // 若松開按鈕或離開按鈕時停止計時
-    generateButton.addEventListener('mouseup', () => {
-        clearTimeout(pressTimer);  // 停止計時器
-    });
-
-    // 支援觸控設備的 touchend 事件
-    generateButton.addEventListener('touchend', () => {
-        clearTimeout(pressTimer);  // 停止計時器
-    });
-
-    generateButton.addEventListener('mouseleave', () => {
-        clearTimeout(pressTimer);  // 停止計時器
-    });
     </script>
 </body>
 </html>
