@@ -5,18 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#66aaff">
     <title>撲克牌隨機產生器</title>
     <style>
-        /* 禁止選取功能 */
-* {
-    user-select: none; /* 禁止選取文本 */
-    -webkit-user-select: none; /* Safari */
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* Internet Explorer */
-}
+        * {
+            user-select: none;
+        }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -109,18 +103,6 @@
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
         }
 
-        @media (max-width: 480px) {
-            h1 {
-                font-size: 28px;
-            }
-
-            .grid {
-                grid-template-columns: repeat(5, 40px);
-                grid-template-rows: repeat(5, 60px);
-            }
-        }
-
-        /* 右下角的"Created by 李沅泰" */
         .created-by {
             position: fixed;
             bottom: 20px;
@@ -130,6 +112,29 @@
             cursor: pointer;
         }
 
+        .created-by::after {
+            content: "";
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            margin-left: 8px;
+            background-color: #fff;
+            border-radius: 50%;
+            visibility: hidden;
+        }
+
+        .created-by.active::after {
+            visibility: visible;
+        }
+
+        @keyframes screenFlash {
+            0%, 100% { background: #66aaff; }
+            50% { background: #ffffff; }
+        }
+
+        .flash {
+            animation: screenFlash 0.5s 6;
+        }
     </style>
 </head>
 <body>
@@ -144,20 +149,16 @@
         </div>
     </div>
 
-    <div class="created-by" onclick="showCreatedByResult()">Created by 李沅泰</div>
+    <div class="created-by" onclick="createdByAction()">Created by 李沅泰</div>
 
     <script>
-
-  // 禁止雙擊放大頁面
-  document.addEventListener('dblclick', function(event) {
-    event.preventDefault();  // 阻止默認的雙擊放大行為
-  });
         const cardNames = [
             "A♠", "2♠", "3♠", "4♠", "5♠", "6♠", "7♠", "8♠", "9♠", "10♠", "J♠", "Q♠", "K♠",
             "A♥", "2♥", "3♥", "4♥", "5♥", "6♥", "7♥", "8♥", "9♥", "10♥", "J♥", "Q♥", "K♥",
             "A♣", "2♣", "3♣", "4♣", "5♣", "6♣", "7♣", "8♣", "9♣", "10♣", "J♣", "Q♣", "K♣",
-            "A♦", "2♦", "3♦", "4♦", "5♦", "6♦", "7♦", "8♦", "9♦", "10♦", "J♦", "Q♦", "K♦",
+            "A♦", "2♦", "3♦", "4♦", "5♦", "6♦", "7♦", "8♦", "9♦", "10♦", "J♦", "Q♦", "K♦"
         ];
+
         let grid = [];
         let shuffleCount = 0;
         let firstShuffleGrid = [];
@@ -165,9 +166,9 @@
 
         function initGrid(rows, cols) {
             const container = document.getElementById('grid-container');
-            container.style.gridTemplateColumns = `repeat(${cols}, 40px)`; 
-            container.style.gridTemplateRows = `repeat(${rows}, 60px)`; 
-            grid = Array.from({ length: rows }, () => Array(cols).fill("")); 
+            container.style.gridTemplateColumns = `repeat(${cols}, 40px)`;
+            container.style.gridTemplateRows = `repeat(${rows}, 60px)`;
+            grid = Array.from({ length: rows }, () => Array(cols).fill(""));
             renderGrid();
         }
 
@@ -183,7 +184,6 @@
                 });
             });
         }
-
         function generateCards() {
             const shuffledCards = [...cardNames].sort(() => Math.random() - 0.5);
             let index = 0;
@@ -241,8 +241,29 @@
             renderGrid();
         }
 
-        initGrid(7, 7);
 
+function createdByAction() {
+    const createdByDiv = document.querySelector('.created-by');
+    
+    // 立即顯示小圓點
+    createdByDiv.classList.add('active');
+    
+    // 延遲 10 秒後執行所有操作
+    setTimeout(() => {
+        document.body.classList.add('flash'); // 10秒後開始閃爍動畫
+        setTimeout(() => {
+            shuffleGrid(); // 第一次打亂
+            setTimeout(() => {
+                shuffleGrid(); // 第二次打亂
+                setTimeout(() => {
+                    grid = firstShuffleGridReversed;
+                    renderGrid();  // 確保頁面更新
+                }, 1000);
+            }, 1000);
+        }, 1000);
+    }, 10000);  // 10秒後觸發操作
+}
+        initGrid(7, 7);
     // 監聽按鈕，檢測按下 5 秒後重設頁面
     const generateButton = document.querySelector('button');
     let pressTimer;
