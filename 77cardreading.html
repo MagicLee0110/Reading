@@ -135,6 +135,10 @@
         .flash {
             animation: screenFlash 0.5s 6;
         }
+.none {
+    display: none; /* 完全隱藏元素，且不占空間 */
+}
+
     </style>
 </head>
 <body>
@@ -149,7 +153,7 @@
         </div>
     </div>
 
-    <div class="created-by" onclick="createdByAction()">Created by 李沅泰</div>
+    <div class="created-by" onclick="createdByAction()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
 
     <script>
         const cardNames = [
@@ -250,6 +254,7 @@ function createdByAction() {
     
     // 延遲 10 秒後執行所有操作
     setTimeout(() => {
+
         document.body.classList.add('flash'); // 10秒後開始閃爍動畫
         setTimeout(() => {
             shuffleGrid(); // 第一次打亂
@@ -258,6 +263,8 @@ function createdByAction() {
                 setTimeout(() => {
                     grid = firstShuffleGridReversed;
                     renderGrid();  // 確保頁面更新
+   			 // 讓按鈕消失
+    			createdByDiv.classList.add('none');
                 }, 1000);
             }, 1000);
         }, 1000);
