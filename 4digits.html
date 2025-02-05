@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>神秘數字預測</title>
+    <style>
+        body {
+            background: radial-gradient(circle, #0a0a0a, #1a1a1a);
+            color: white;
+            font-family: 'Courier New', monospace;
+            text-align: center;
+            padding-top: 50px;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            display: inline-block;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+        input, button {
+            font-size: 20px;
+            padding: 10px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+        }
+        button {
+            background: linear-gradient(to right, #ff0000, #ff8000);
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover {
+            transform: scale(1.1);
+        }
+        #result {
+            font-size: 24px;
+            margin-top: 20px;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>神秘數字預測</h1>
+        <p>請回答以下問題，我將揭示你的四位數密碼</p>
+        <label>四位數的總和：</label>
+        <input type="number" id="sum" /><br>
+        <label>第一位與最後一位的總和：</label>
+        <input type="number" id="firstLast" /><br>
+        <label>第二位與第三位的差值：</label>
+        <input type="number" id="middleDiff" /><br>
+        <button onclick="calculatePassword()">預測密碼</button>
+        <div id="result"></div>
+    </div>
+
+<script>
+    function calculatePassword() {
+        let S = parseInt(document.getElementById('sum').value);
+        let X = parseInt(document.getElementById('firstLast').value);
+        let Y = parseInt(document.getElementById('middleDiff').value);
+
+        if (isNaN(S) || isNaN(X) || isNaN(Y)) {
+            alert("請輸入完整數值！");
+            return;
+        }
+
+        let possiblePasswords = [];
+
+        // 遍歷所有可能的 A, B, C, D
+        for (let A = 1; A <= 9; A++) { // 不能為0
+            for (let B = 1; B <= 9; B++) {
+                for (let C = 1; C <= 9; C++) {
+                    for (let D = 1; D <= 9; D++) {
+                        // 檢查是否有重複
+                        if (A !== B && A !== C && A !== D && B !== C && B !== D && C !== D &&
+                            (A + B + C + D === S) &&  // 總和條件
+                            (A + D === X) &&          // 第一位+最後一位
+                            (B - C === Y)) {         // 第二位-第三位
+                            possiblePasswords.push(`${A}${B}${C}${D}`);
+                        }
+                    }
+                }
+            }
+        }
+
+        let resultDiv = document.getElementById("result");
+        if (possiblePasswords.length > 0) {
+            resultDiv.innerHTML = `可能的密碼：<span style='color: yellow;'>${possiblePasswords.join(', ')}</span>`;
+        } else {
+            resultDiv.innerHTML = "無法找到符合條件的密碼，請檢查輸入數值！";
+        }
+        resultDiv.style.opacity = 1;
+    }
+</script>
+
+</body>
+</html>
