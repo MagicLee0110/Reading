@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <title>五大人格測驗</title>
+  <style>
+    /* Reset & base */
+    * {
+      box-sizing: border-box;
+    }
+    html, body {
+      height: 100%;
+      margin: 0;
+      font-family: "Noto Sans TC", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #fff;
+    }
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      min-height: 100vh;
+      flex-direction: column;
+    }
+
+    /* 起始頁面 */
+    #start-section {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border-radius: 20px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+      padding: 40px 50px;
+      width: 100%;
+      max-width: 420px;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    #start-section h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+    }
+    #start-section p {
+      font-size: 1.1rem;
+      margin-bottom: 30px;
+      color: #e0d7f7;
+      font-weight: 500;
+    }
+    #start-section label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+      font-size: 1.1rem;
+      color: #eee;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+    }
+    #start-section input {
+      width: 100%;
+      padding: 14px 16px;
+      font-size: 1.1rem;
+      border-radius: 10px;
+      border: none;
+      outline: none;
+      margin-bottom: 25px;
+      box-shadow: inset 0 0 8px rgba(255,255,255,0.3);
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+      transition: background-color 0.3s ease;
+    }
+    #start-section input::placeholder {
+      color: #ddd;
+      opacity: 0.7;
+    }
+    #start-section input:focus {
+      background: rgba(255,255,255,0.3);
+      box-shadow: 0 0 15px #8b5cf6;
+      color: #fff;
+    }
+    #start-section button {
+      width: 100%;
+      padding: 16px 0;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #fff;
+      background: #7c3aed;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(124,58,237,0.5);
+      transition: all 0.3s ease;
+      user-select: none;
+    }
+    #start-section button:hover {
+      background: #5b21b6;
+      box-shadow: 0 10px 25px rgba(91,33,182,0.7);
+      transform: translateY(-2px);
+    }
+    #start-section button:active {
+      transform: translateY(0);
+      box-shadow: 0 6px 15px rgba(91,33,182,0.5);
+    }
+
+    /* 進度條容器 */
+    #progress-container {
+      width: 100%;
+      background: #e0e0e0;
+      border-radius: 10px;
+      height: 16px;
+      margin-bottom: 20px;
+      overflow: hidden;
+      box-shadow: inset 0 2px 4px rgba(255,255,255,0.6);
+      display: none;
+      max-width: 900px;
+    }
+    #progress-bar {
+      height: 100%;
+      background: #4f46e5;
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    /* 題目樣式 */
+    #quizForm {
+      background: #fff;
+      padding: 25px 30px;
+      border-radius: 12px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+      margin-bottom: 30px;
+      display: none;
+      max-width: 900px;
+      color: #333;
+    }
+    .question {
+      margin-bottom: 18px;
+      padding: 15px 20px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background: #fafafa;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .question strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 1.1rem;
+      color: #1f2937;
+    }
+    .question label {
+      display: inline-block;
+      margin-right: 15px;
+      cursor: pointer;
+      font-weight: 500;
+      color: #4b5563;
+      user-select: none;
+      transition: color 0.2s;
+    }
+    .question input[type="radio"] {
+      display: none;
+    }
+    .question input[type="radio"]:checked + label {
+      color: #4f46e5;
+      font-weight: 700;
+    }
+    .question label:hover {
+      color: #6366f1;
+    }
+
+    /* 按鈕 */
+    #quizForm button {
+      background-color: #4f46e5;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 14px 32px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.25s ease;
+      user-select: none;
+      box-shadow: 0 4px 10px rgba(79,70,229,0.3);
+      margin-right: 10px;
+    }
+    #quizForm button:hover {
+      background-color: #4338ca;
+      box-shadow: 0 6px 15px rgba(67,56,202,0.4);
+    }
+    #quizForm button:disabled {
+      background-color: #a5b4fc;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    /* 結果區 */
+    #result-section {
+      border-left: 8px solid #10b981;
+      background: #fff;
+      padding: 25px 30px;
+      border-radius: 12px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+      display: none;
+      max-width: 900px;
+      color: #065f46;
+    }
+    #userResult strong {
+      font-size: 1.3rem;
+    }
+    #userResult p {
+      margin: 10px 0;
+      font-size: 1.1rem;
+    }
+
+    /* 響應式 */
+    @media screen and (max-width: 600px) {
+      .question label {
+        display: block;
+        margin-bottom: 6px;
+      }
+      #quizForm button {
+        width: 100%;
+        margin: 8px 0;
+      }
+      #start-section button {
+        width: 100%;
+      }
+      #start-section {
+        padding: 30px 25px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="start-section" class="active">
+    <h1>五大人格測驗</h1>
+    <p>請輸入你的姓名開始測驗，了解自己的性格特質！</p>
+    <label for="userName">姓名</label>
+    <input type="text" id="userName" placeholder="請輸入姓名" autocomplete="off" />
+    <button id="startBtn" onclick="startTest()">開始測驗</button>
+  </div>
+
+  <div id="progress-container">
+    <div id="progress-bar"></div>
+  </div>
+
+  <form id="quizForm"></form>
+
+  <div id="result-section">
+    <h2>測驗結果</h2>
+    <div id="userResult"></div>
+  </div>
+
+  <script>
+    const questions = [
+      // 請自行替換為你的180題題庫，id從q1開始
+
+      { id: 'q1', text: '我經常陷入白日夢之中。', trait: '開放性' },
+      { id: 'q2', text: '我享受徜徉在想像的世界裡。', trait: '開放性' },
+      { id: 'q3', text: '我喜歡沉浸在自己的想法中。', trait: '開放性' },
+      { id: 'q4', text: '我熱衷於自己的想像。', trait: '開放性' },
+      { id: 'q5', text: '我有非常生動的想像力。', trait: '開放性' },
+      { id: 'q6', text: '想像力能在日常生活中幫助我。', trait: '開放性' },
+      { id: 'q7', text: '我認為藝術非常重要。', trait: '開放性' },
+      { id: 'q8', text: '我有很獨特的美感。', trait: '開放性' },
+      { id: 'q9', text: '我能察覺其他人無法發現的美。', trait: '開放性' },
+      { id: 'q10', text: '藝術品深深地觸動我。', trait: '開放性' },
+      { id: 'q11', text: '我熱愛一切美麗的事物。', trait: '開放性' },
+      { id: 'q12', text: '美麗的事物在我的生命中占有一席之地。', trait: '開放性' },
+      { id: 'q13', text: '我能感受到自己的感受非常強烈。', trait: '開放性' },
+      { id: 'q14', text: '我有很好的共感能力，能感受到其他人的情緒。', trait: '開放性' },
+      { id: 'q15', text: '我的思考與行為受到感覺引導。', trait: '開放性' },
+      { id: 'q16', text: '我的情緒起伏比別人大。', trait: '開放性' },
+      { id: 'q17', text: '我對情緒的感覺非常敏銳。', trait: '開放性' },
+      { id: 'q18', text: '我的感受異常豐富。', trait: '開放性' },
+      { id: 'q19', text: '我喜歡嘗試新事物。', trait: '開放性' },
+      { id: 'q20', text: '比起一成不變，我更喜歡求新求變。', trait: '開放性' },
+      { id: 'q21', text: '我尋求變化。', trait: '開放性' },
+      { id: 'q22', text: '我追求新的體驗。', trait: '開放性' },
+      { id: 'q23', text: '比起熟悉的事物，我更喜歡新事物。', trait: '開放性' },
+      { id: 'q24', text: '多彩多姿的生活對我來說很重要。', trait: '開放性' },
+      { id: 'q25', text: '我喜歡研究複雜的問題。', trait: '開放性' },
+      { id: 'q26', text: '我對抽象的想法感興趣。', trait: '開放性' },
+      { id: 'q27', text: '我喜歡挑戰性的內容。', trait: '開放性' },
+      { id: 'q28', text: '我喜歡仔細研究理論。', trait: '開放性' },
+      { id: 'q29', text: '陌生領域的知識會激發我的好奇心。', trait: '開放性' },
+      { id: 'q30', text: '我喜歡新的想法。', trait: '開放性' },
+      { id: 'q31', text: '我認為以稅款贊助藝術家是非常重要的。', trait: '開放性' },
+      { id: 'q32', text: '我認為協助總是比懲罰好。', trait: '開放性' },
+      { id: 'q33', text: '我對任何形式的權威都採取批判的質疑態度。', trait: '開放性' },
+      { id: 'q34', text: '我認為囚犯受到過於嚴苛的對待。', trait: '開放性' },
+      { id: 'q35', text: '我認為傳統應該與時俱進。', trait: '開放性' },
+      { id: 'q36', text: '我經常對社會規範提出帶有批判的質疑。', trait: '開放性' },
+
+      { id: 'q37', text: '我能輕鬆又快速地理解事情。', trait: '責任感' },
+      { id: 'q38', text: '我擅長找到好的解決方案。', trait: '責任感' },
+      { id: 'q39', text: '我總是成功地完成任務。', trait: '責任感' },
+      { id: 'q40', text: '我能輕鬆做出明智的決策。', trait: '責任感' },
+      { id: 'q41', text: '我已經準備好迎接未來的挑戰。', trait: '責任感' },
+      { id: 'q42', text: '我確信自己能成功地掌握人生。', trait: '責任感' },
+      { id: 'q43', text: '我總是能確保物品有放回原位。', trait: '責任感' },
+      { id: 'q44', text: '我喜歡乾淨整齊。', trait: '責任感' },
+      { id: 'q45', text: '我非常謹慎地保管自己的財物。', trait: '責任感' },
+      { id: 'q46', text: '雜亂無章會嚴重影響我。', trait: '責任感' },
+      { id: 'q47', text: '我喜歡按照一定的順序處理事情。', trait: '責任感' },
+      { id: 'q48', text: '我喜歡懷保持井然有序。', trait: '責任感' },
+      { id: 'q49', text: '我絕對可靠。', trait: '責任感' },
+      { id: 'q50', text: '強烈的責任感在生活的各個面向指引著我。', trait: '責任感' },
+      { id: 'q51', text: '我嚴格遵守自己的原則。', trait: '責任感' },
+      { id: 'q52', text: '對我來說，守時是很重要的。', trait: '責任感' },
+      { id: 'q53', text: '我會全力以赴履行自己的職責。', trait: '責任感' },
+      { id: 'q54', text: '對我來說，工作比玩樂重要。', trait: '責任感' },
+      { id: 'q55', text: '我會付出一切努力達成目標。', trait: '責任感' },
+      { id: 'q56', text: '我認真工作。', trait: '責任感' },
+      { id: 'q57', text: '我總是全力以赴地完成工作、不輕易放棄。', trait: '責任感' },
+      { id: 'q58', text: '我總是希望自己能超越期望。', trait: '責任感' },
+      { id: 'q59', text: '有抱負的目標激勵著我。', trait: '責任感' },
+      { id: 'q60', text: '我在自己的計劃上投入大量的時間與精力。', trait: '責任感' },
+      { id: 'q61', text: '我能夠處理一件事情時，就不會讓自己分心。', trait: '責任感' },
+      { id: 'q62', text: '多虧我的意志力，我可以輕鬆克服自己的懈怠。', trait: '責任感' },
+      { id: 'q63', text: '必須完成工作的時候，我會非常有紀律。', trait: '責任感' },
+      { id: 'q64', text: '我能毫不費力地將決心化為行動。', trait: '責任感' },
+      { id: 'q65', text: '我能以極大的耐心完成費時的工作。', trait: '責任感' },
+      { id: 'q66', text: '即使遭遇阻礙，我仍會完成已經進行的工作。', trait: '責任感' },
+      { id: 'q67', text: '在著手處理前，我會先設想可能發生的錯誤。', trait: '責任感' },
+      { id: 'q68', text: '我會小心謹慎地措辭。', trait: '責任感' },
+      { id: 'q69', text: '行動前我會仔細思考。', trait: '責任感' },
+      { id: 'q70', text: '我總是考慮周全地處理事情。', trait: '責任感' },
+      { id: 'q71', text: '我總是拖延地考慮自己的計畫。', trait: '責任感' },
+      { id: 'q72', text: '我會花時間考量，做出縝密的決策。', trait: '責任感' },
+
+      { id: 'q73', text: '對我來說，交朋友很簡單。', trait: '外向性' },
+      { id: 'q74', text: '對其他人來說，要認識我很簡單。', trait: '外向性' },
+      { id: 'q75', text: '對我來說，主動親近別人很容易。', trait: '外向性' },
+      { id: 'q76', text: '我喜歡和他人交談。', trait: '外向性' },
+      { id: 'q77', text: '我是一個隨和的人。', trait: '外向性' },
+      { id: 'q78', text: '我喜歡交出一種友善的氛圍。', trait: '外向性' },
+      { id: 'q79', text: '我不喜歡獨處。', trait: '外向性' },
+      { id: 'q80', text: '我喜歡做大型活動。', trait: '外向性' },
+      { id: 'q81', text: '我覺得自己有必要成為團體中的一分子。', trait: '外向性' },
+      { id: 'q82', text: '我會避免沉默。', trait: '外向性' },
+      { id: 'q83', text: '我會維繫許多社交關係。', trait: '外向性' },
+      { id: 'q84', text: '我喜歡一群人聚在一起的感覺。', trait: '外向性' },
+      { id: 'q85', text: '我喜歡指導其他人。', trait: '外向性' },
+      { id: 'q86', text: '我說服他人的能力很強。', trait: '外向性' },
+      { id: 'q87', text: '對我來說，表達自己的訴求不是太困難的事。', trait: '外向性' },
+      { id: 'q88', text: '我喜歡掌控局面。', trait: '外向性' },
+      { id: 'q89', text: '領導是我的強項。', trait: '外向性' },
+      { id: 'q90', text: '我會堅決表達自己的意見。', trait: '外向性' },
+      { id: 'q91', text: '我適合很快的步調。', trait: '外向性' },
+      { id: 'q92', text: '我總是忙個不停，四處奔走。', trait: '外向性' },
+      { id: 'q93', text: '閒暇時我會做很多事。', trait: '外向性' },
+      { id: 'q94', text: '我的反應很迅速。', trait: '外向性' },
+      { id: 'q95', text: '我喜歡同時處理很多事。', trait: '外向性' },
+      { id: 'q96', text: '我總是充滿幹勁。', trait: '外向性' },
+      { id: 'q97', text: '我喜歡刺激的感覺。', trait: '外向性' },
+      { id: 'q98', text: '我喜歡做大膽的事。', trait: '外向性' },
+      { id: 'q99', text: '我喜歡冒險。', trait: '外向性' },
+      { id: 'q100', text: '我總是在尋求腎上腺素爆發的感覺。', trait: '外向性' },
+      { id: 'q101', text: '我無可救藥地受到冒險吸引。', trait: '外向性' },
+      { id: 'q102', text: '我喜歡有風險的事。', trait: '外向性' },
+      { id: 'q103', text: '我散發出愉悅的感覺。', trait: '外向性' },
+      { id: 'q104', text: '許多事物都讓我覺得很有趣。', trait: '外向性' },
+      { id: 'q105', text: '我常常像個孩子一樣快樂。', trait: '外向性' },
+      { id: 'q106', text: '我總是看到生命光亮的那面。', trait: '外向性' },
+      { id: 'q107', text: '我能逗笑朋友們。', trait: '外向性' },
+      { id: 'q108', text: '我時常充滿熱情。', trait: '外向性' },
+
+
+      { id: 'q109', text: '我堅信每個人都是為了我好。', trait: '親和性' },
+      { id: 'q110', text: '我很容易相信他人。', trait: '親和性' },
+      { id: 'q111', text: '我總是認為每個人的意圖都是好的。', trait: '親和性' },
+      { id: 'q112', text: '我堅信人性本善。', trait: '親和性' },
+      { id: 'q113', text: '基本上我認為每個人都是誠實的。', trait: '親和性' },
+      { id: 'q114', text: '我認為每個人的行為都是正直的。', trait: '親和性' },
+      { id: 'q115', text: '我絕對不會為了自己的利益而影響他人。', trait: '親和性' },
+      { id: 'q116', text: '與他人競爭時，我會嚴格遵守規則。', trait: '親和性' },
+      { id: 'q117', text: '我總是坦誠地與他人交往。', trait: '親和性' },
+      { id: 'q118', text: '即使對自己不利，我仍會誠實以對。', trait: '親和性' },
+      { id: 'q119', text: '我保有赤子之心。', trait: '親和性' },
+      { id: 'q120', text: '我會不帶偏見地表達讚美與批評。', trait: '親和性' },
+      { id: 'q121', text: '我把別人的需求放在第一位。', trait: '親和性' },
+      { id: 'q122', text: '比起自己，我更關心他人。', trait: '親和性' },
+      { id: 'q123', text: '我會幫每個人說好話。', trait: '親和性' },
+      { id: 'q124', text: '我會幫助他人。', trait: '親和性' },
+      { id: 'q125', text: '為了他人，我會先放下自己的需求。', trait: '親和性' },
+      { id: 'q126', text: '我會留意其他人是否都感到舒適自在。', trait: '親和性' },
+      { id: 'q127', text: '我很不喜歡反駁他人。', trait: '親和性' },
+      { id: 'q128', text: '我會盡一切努力盡快調解衝突。', trait: '親和性' },
+      { id: 'q129', text: '我寧願壓抑自己的不滿，也不願冒著會吵架的風險。', trait: '親和性' },
+      { id: 'q130', text: '吵架的時候，我傾向找回和諧。', trait: '親和性' },
+      { id: 'q131', text: '爭辯的時候，我大多會讓步。', trait: '親和性' },
+      { id: 'q132', text: '我寧願妥協，而不是堅持正確性。', trait: '親和性' },
+      { id: 'q133', text: '我常在他人面前淡化自己的才能。', trait: '親和性' },
+      { id: 'q134', text: '我會因為自己的焦點讓我覺得不自在。', trait: '親和性' },
+      { id: 'q135', text: '我會避免讓自己的能力成為焦點。', trait: '親和性' },
+      { id: 'q136', text: '我不喜歡談論自己的成就。', trait: '親和性' },
+      { id: 'q137', text: '我不愛出風頭。', trait: '親和性' },
+      { id: 'q138', text: '談論到自己的時候，我傾向輕描淡寫。', trait: '親和性' },
+      { id: 'q139', text: '善良的人是我的好榜樣。', trait: '親和性' },
+      { id: 'q140', text: '對我來說，合作比競爭重要。', trait: '親和性' },
+      { id: 'q141', text: '他人的痛苦讓我感同身受。', trait: '親和性' },
+      { id: 'q142', text: '對我來說，最重要的美德是站在弱勢的一方。', trait: '親和性' },
+      { id: 'q143', text: '我非常關心所有人的幸福。', trait: '親和性' },
+      { id: 'q144', text: '對我來說，善良比正義重要。', trait: '親和性' },
+
+      { id: 'q145', text: '我很容易感到擔心。', trait: '神經質' },
+      { id: 'q146', text: '我的內心常常有某種緊繃的感覺。', trait: '神經質' },
+      { id: 'q147', text: '我常常想著事情有可能會出錯。', trait: '神經質' },
+      { id: 'q148', text: '我很容易受到事件影響而感到不安。', trait: '神經質' },
+      { id: 'q149', text: '我擔心很多事情。', trait: '神經質' },
+      { id: 'q150', text: '我常常都很緊張。', trait: '神經質' },
+      { id: 'q151', text: '我經常感受到強烈的憤怒。', trait: '神經質' },
+      { id: 'q152', text: '我很容易生氣。', trait: '神經質' },
+      { id: 'q153', text: '我很容易受到傷害。', trait: '神經質' },
+      { id: 'q154', text: '我很容易被激怒。', trait: '神經質' },
+      { id: 'q155', text: '我的情緒會一下子就變得很差。', trait: '神經質' },
+      { id: 'q156', text: '我覺得自己性情暴躁。', trait: '神經質' },
+      { id: 'q157', text: '我常常感到悲傷。', trait: '神經質' },
+      { id: 'q158', text: '我經常自我懷疑。', trait: '神經質' },
+      { id: 'q159', text: '我經常覺得很絕望。', trait: '神經質' },
+      { id: 'q160', text: '我經常希望自己能變得不一樣。', trait: '神經質' },
+      { id: 'q161', text: '我經常為一些事情感到沮喪。', trait: '神經質' },
+      { id: 'q162', text: '有些時候，我覺得一切都是黑暗的。', trait: '神經質' },
+      { id: 'q163', text: '我很容易尷尬。', trait: '神經質' },
+      { id: 'q164', text: '很多事情令我感到為難。', trait: '神經質' },
+      { id: 'q165', text: '對我來說，認識其他人很困難。', trait: '神經質' },
+      { id: 'q166', text: '難應付的社交場合讓我感到不自在。', trait: '神經質' },
+      { id: 'q167', text: '他人將目光轉向我的時候，會讓我不知所措。', trait: '神經質' },
+      { id: 'q168', text: '在他人面前發言會讓我感到不自在。', trait: '神經質' },
+      { id: 'q169', text: '我難以抗拒誘惑。', trait: '神經質' },
+      { id: 'q170', text: '我會做一些讓自己後悔的事。', trait: '神經質' },
+      { id: 'q171', text: '我總是不受約束。', trait: '神經質' },
+      { id: 'q172', text: '我很難堅持自己的決心。', trait: '神經質' },
+      { id: 'q173', text: '我非常不喜歡放棄。', trait: '神經質' },
+      { id: 'q174', text: '對我來說，克制自己不簡單。', trait: '神經質' },
+      { id: 'q175', text: '我很容易陷入恐慌。', trait: '神經質' },
+      { id: 'q176', text: '在有壓力的情況下，我很快就會失去冷靜。', trait: '神經質' },
+      { id: 'q177', text: '我經常覺得自己無法掌控危急的情況。', trait: '神經質' },
+      { id: 'q178', text: '我很容易被不好的事情影響而打亂自己的步調。', trait: '神經質' },
+      { id: 'q179', text: '在有壓力的情況下，我的感受會壓垮自己。', trait: '神經質' },
+      { id: 'q180', text: '有困難的時候，我會依賴他人的支持。', trait: '神經質' },
+
+      // ...繼續補充到180題
+    ];
+
+    const perPage = 5;
+    let currentPage = 0;
+    let answers = {};
+    let userName = '';
+
+    const quizForm = document.getElementById('quizForm');
+    const startSection = document.getElementById('start-section');
+    const resultSection = document.getElementById('result-section');
+    const userResult = document.getElementById('userResult');
+    const progressBar = document.getElementById('progress-bar');
+    const progressContainer = document.getElementById('progress-container');
+
+    function startTest() {
+      userName = document.getElementById('userName').value.trim();
+      if (!userName) {
+        alert('請輸入姓名');
+        return;
+      }
+      startSection.style.display = 'none';
+      quizForm.style.display = 'block';
+      progressContainer.style.display = 'block';
+      currentPage = 0;
+      answers = {};
+      renderPage();
+      updateProgress();
+      window.scrollTo({top:0, behavior:'smooth'});
+    }
+
+    function renderPage() {
+      quizForm.innerHTML = '';
+      const start = currentPage * perPage;
+      const end = Math.min(start + perPage, questions.length);
+
+      for (let i = start; i < end; i++) {
+        const q = questions[i];
+        const answer = answers[q.id] || '';
+        const div = document.createElement('div');
+        div.className = 'question';
+        div.innerHTML = `
+          <strong>${i + 1}. ${q.text}</strong>
+          ${[1,2,3,4,5].map(n =>
+            `<input type="radio" id="${q.id}-${n}" name="${q.id}" value="${n}" ${answer == n ? 'checked' : ''} />
+            <label for="${q.id}-${n}">${n}</label>`).join('')}
+        `;
+        quizForm.appendChild(div);
+      }
+
+      const navDiv = document.createElement('div');
+      navDiv.style.marginTop = '25px';
+
+      if (currentPage > 0) {
+        const prevBtn = document.createElement('button');
+        prevBtn.textContent = '上一頁';
+        prevBtn.type = 'button';
+        prevBtn.onclick = prevPage;
+        navDiv.appendChild(prevBtn);
+      }
+
+      if (end < questions.length) {
+        const nextBtn = document.createElement('button');
+        nextBtn.textContent = '下一頁';
+        nextBtn.type = 'button';
+        nextBtn.onclick = nextPage;
+        navDiv.appendChild(nextBtn);
+      } else {
+        const submitBtn = document.createElement('button');
+        submitBtn.textContent = '查看結果';
+        submitBtn.type = 'button';
+        submitBtn.onclick = submitTest;
+        navDiv.appendChild(submitBtn);
+      }
+
+      quizForm.appendChild(navDiv);
+    }
+
+    function saveAnswers() {
+      const inputs = quizForm.querySelectorAll('input[type=radio]:checked');
+      inputs.forEach(input => {
+        answers[input.name] = parseInt(input.value);
+      });
+    }
+
+    function nextPage() {
+      saveAnswers();
+      currentPage++;
+      renderPage();
+      updateProgress();
+      window.scrollTo({top:0, behavior:'smooth'});
+    }
+
+    function prevPage() {
+      saveAnswers();
+      currentPage--;
+      renderPage();
+      updateProgress();
+      window.scrollTo({top:0, behavior:'smooth'});
+    }
+
+    function updateProgress() {
+      const progressPercent = ((currentPage + 1) / Math.ceil(questions.length / perPage)) * 100;
+      progressBar.style.width = progressPercent + '%';
+    }
+
+    function submitTest() {
+      saveAnswers();
+      // 檢查是否有題目沒作答
+      const unanswered = questions.some(q => !(q.id in answers));
+      if (unanswered) {
+        alert('請完成所有題目！');
+        return;
+      }
+      const traits = {
+        '開放性': 0,
+        '責任感': 0,
+        '外向性': 0,
+        '親和性': 0,
+        '神經質': 0
+      };
+      questions.forEach(q => {
+        traits[q.trait] += answers[q.id];
+      });
+
+      quizForm.style.display = 'none';
+      progressContainer.style.display = 'none';
+      resultSection.style.display = 'block';
+
+      let html = `<p><strong>${userName}</strong>，你的五大人格測驗結果如下：</p>`;
+      for (const [trait, score] of Object.entries(traits)) {
+        html += `<p>${trait}：<strong>${score} 分</strong></p>`;
+      }
+      userResult.innerHTML = html;
+      window.scrollTo({top:0, behavior:'smooth'});
+    }
+  </script>
+</body>
+</html>
