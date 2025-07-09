@@ -557,13 +557,13 @@ function submitTest() {
     return;
   }
 
-  const traits = {
-    '開放性': 0,
-    '盡責性': 0,
-    '外向性': 0,
-    '宜人性': 0,
-    '情緒穩定性': 0
-  };
+      const traits = {
+        '開放性': 0,
+        '責任感': 0,
+        '外向性': 0,
+        '親和性': 0,
+        '神經質': 0
+      };
 
   questions.forEach(q => {
     traits[q.trait] += answers[q.id];
