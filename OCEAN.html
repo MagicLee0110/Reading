@@ -475,7 +475,7 @@
       const start = currentPage * perPage;
       const end = Math.min(start + perPage, questions.length);
 
-      const labels = ['非常不符合', '不太符合', '普通', '符合', '非常符合'];
+      const labels = ['非常不符合(1分)', '不太符合(2分)', '普通(3分)', '符合(4分)', '非常符合(5分)'];
 
       for (let i = start; i < end; i++) {
         const q = questions[i];
