@@ -129,7 +129,7 @@
 
     /* 題目樣式 */
         #quizForm {
-      max-height: 100px; /* 或你想要的高度 */
+      max-height: 50px; /* 或你想要的高度 */
     }
     .question {
       margin-bottom: 18px;
@@ -475,6 +475,8 @@
       const start = currentPage * perPage;
       const end = Math.min(start + perPage, questions.length);
 
+      const labels = ['非常不符合', '不太符合', '普通', '符合', '非常符合'];
+
       for (let i = start; i < end; i++) {
         const q = questions[i];
         const answer = answers[q.id] || '';
@@ -484,7 +486,7 @@
           <strong>${i + 1}. ${q.text}</strong>
           ${[1,2,3,4,5].map(n =>
             `<input type="radio" id="${q.id}-${n}" name="${q.id}" value="${n}" ${answer == n ? 'checked' : ''} />
-            <label for="${q.id}-${n}">${n}</label>`).join('')}
+            <label for="${q.id}-${n}">${labels[n - 1]}</label>`).join('')}
         `;
         quizForm.appendChild(div);
       }
