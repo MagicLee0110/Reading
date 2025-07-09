@@ -547,36 +547,39 @@
       progressBar.style.width = progressPercent + '%';
     }
 
-    function submitTest() {
-      saveAnswers();
-      // 檢查是否有題目沒作答
-      const unanswered = questions.some(q => !(q.id in answers));
-      if (unanswered) {
-        alert('請完成所有題目！');
-        return;
-      }
-      const traits = {
-        '開放性': 0,
-        '責任感': 0,
-        '外向性': 0,
-        '親和性': 0,
-        '神經質': 0
-      };
-      questions.forEach(q => {
-        traits[q.trait] += answers[q.id];
-      });
+function submitTest() {
+  saveAnswers();
 
-      quizForm.style.display = 'none';
-      progressContainer.style.display = 'none';
-      resultSection.style.display = 'block';
+  // 🔍 檢查是否有未作答題目
+  const unanswered = questions.filter(q => !(q.id in answers));
+  if (unanswered.length > 0) {
+    alert("⚠️ 以下題目尚未作答：\n" + unanswered.map(q => `${questions.indexOf(q) + 1}. ${q.text}`).join('\n'));
+    return;
+  }
 
-      let html = `<p><strong>${userName}</strong>，你的五大人格測驗結果如下：</p>`;
-      for (const [trait, score] of Object.entries(traits)) {
-        html += `<p>${trait}：<strong>${score} 分</strong></p>`;
-      }
-      userResult.innerHTML = html;
-      window.scrollTo({top:0, behavior:'smooth'});
-    }
+  const traits = {
+    '開放性': 0,
+    '盡責性': 0,
+    '外向性': 0,
+    '宜人性': 0,
+    '情緒穩定性': 0
+  };
+
+  questions.forEach(q => {
+    traits[q.trait] += answers[q.id];
+  });
+
+  quizForm.style.display = 'none';
+  resultSection.style.display = 'block';
+
+  let html = `<p><strong>${userName}</strong> 的人格測驗結果如下：</p>`;
+  for (const [trait, score] of Object.entries(traits)) {
+    html += `<p>${trait}：<strong>${score} 分</strong></p>`;
+  }
+  userResult.innerHTML = html;
+}
+
+
   </script>
 </body>
 </html>
